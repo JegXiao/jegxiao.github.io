@@ -1,0 +1,63 @@
+/* 全局样式 */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+header {
+    margin-top: 50px;
+    text-align: center;
+    color: #333;
+}
+
+/* 网格容器：每行4个按钮，手机端自动调整 */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 40px;
+    max-width: 1000px;
+}
+
+/* 按钮基础样式 */
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    background-color: #fff;
+    color: #007AFF;
+    border: 2px solid #007AFF;
+    padding: 20px;
+    border-radius: 12px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 悬停效果 */
+.btn:hover {
+    background-color: #007AFF;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,122,255,0.2);
+}
+
+/* 响应式适配：平板端3列，手机端2列 */
+@media (max-width: 800px) {
+    .grid-container { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 600px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 20px;
+        gap: 10px;
+    }
+}
