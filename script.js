@@ -1,8 +1,8 @@
 // 在这里填写你的项目名称和对应的 URL
 const projects = [
-    { name: "项目 1", url: "https://jegxiao.github.io/project1" },
-    { name: "项目 2", url: "#" },
-    { name: "项目 3", url: "#" },
+    { name: "本页面", url: "https://jegxiao.github.io/index.html" },
+    { name: "何意味", url: "https://jegxiao.github.io/何意味/heyiwei.html" },
+    { name: "何意味（汉字域名）", url: "https://jegxiao.github.io/何意味/何意味.html" },
     { name: "项目 4", url: "#" },
     { name: "项目 5", url: "#" },
     { name: "项目 6", url: "#" },
