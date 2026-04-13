@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>何意味 · 发生器</title>
+    <title>何意味 · 何意味</title>
     <style>
         body {
             display: flex;
@@ -17,34 +17,34 @@
         }
         .container {
             text-align: center;
-            padding: 2rem;
+            padding: 3rem;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-radius: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             max-width: 80%;
         }
         #display-area {
-            font-size: 1.5rem;
+            font-size: 2rem;
             margin-bottom: 2rem;
             min-height: 3rem;
             line-height: 1.5;
             color: #555;
         }
         button {
-            padding: 10px 25px;
+            padding: 15px 30px;
             font-size: 1rem;
             cursor: pointer;
             background-color: #222;
-            color: white;
+            color: #ffffff;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             transition: opacity 0.3s;
         }
         button:hover {
             opacity: 0.8;
         }
         .symbol {
-            font-size: 0.8rem;
+            font-size: 1rem;
             color: #999;
             margin-top: 1rem;
         }
@@ -53,9 +53,9 @@
 <body>
 
 <div class="container">
-    <div id="display-area">点击下方，探寻某种意义。</div>
+    <div id="display-area">点击下方，探寻某种意味。</div>
     <button onclick="generateSentence()">生成“何意味”</button>
-    <div class="symbol">—— 不知意味的瞬间 ——</div>
+    <div class="symbol">—— 何 · 意 · 味 ——</div>
 </div>
 
 <script>
@@ -80,7 +80,7 @@
     ];
 
     const endings = [
-        "，何意味？", "，此中真意竟为何？", "。何意味也？",
+        "，何意味？", "，此中真意竟为何？", "。是啊，为什么？", "。意谓？",
         "……这究竟，意味着什么？", "——这种事，有何意义？",
         "，其存在本身即是疑问。", "。若无回声，何谈意味？"
     ];
