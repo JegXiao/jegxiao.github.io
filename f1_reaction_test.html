@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F1 红灯熄灭反应测试 (空格键支持)</title>
+    <title>F1反应测试</title>
+
+    <!-- 浏览器通用图标 (SVG 方案，自动适应各种尺寸) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏎️</text></svg>">
+
+    <!-- 针对 iOS 设备 (Apple Touch Icon) -->
+    <!-- 注意：iOS 不原生支持在苹果桌面图标上渲染 SVG Emoji，
+         如果需要完美效果建议使用图片；但如果坚持用代码，可保留此 SVG 链接 -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22white%22/><text y=%22.9em%22 font-size=%2280%22 x=%225%22>🏎️</text></svg>">
+
 
     <style>
         /* CSS 样式部分 (已保留用户更改) */
@@ -67,7 +76,8 @@
     </style>
 </head>
 <body>
-    <h1>🚥 F1 发车反应测试 (点击 或 按下空格)</h1>
+    <h1>🚥F1发车反应测试</h1>
+    <h1>(点击或按下空格)</h1>
 
     <div id="lightsContainer">
         <div class="light" id="light-1"></div>
