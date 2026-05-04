@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>赛车动力学演示</title>
+
+    <!-- 浏览器通用图标 (SVG 方案，自动适应各种尺寸) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏎️</text></svg>">
+
+    <!-- 针对 iOS 设备 (Apple Touch Icon) -->
+    <!-- 注意：iOS 不原生支持在苹果桌面图标上渲染 SVG Emoji，
+         如果需要完美效果建议使用图片；但如果坚持用代码，可保留此 SVG 链接 -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22white%22/><text y=%22.9em%22 font-size=%2280%22 x=%225%22>🏎️</text></svg>">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="top">
+    <div class="left">
+        <canvas id="ggCanvas" width="600" height="600"></canvas>
+    </div>
+
+    <div class="right">
+        <div id="joystickArea">
+            <canvas id="gridCanvas"></canvas>
+            <div id="joystick"></div>
+            <div id="floatingInfo"></div>
+        </div>
+    </div>
+</div>
+
+<div class="bottom">
+    <div class="dataBox">
+        <div>切向加速度 at: <span id="at">0</span> m/s²</div>
+        <div>切向线速度 v: <span id="v">0</span> m/s</div>
+        <div>转弯半径 R: <span id="R">∞</span> m</div>
+        <div>曲率 κ: <span id="kappa">0</span> 1/m</div>
+        <div>向心加速度 ac: <span id="ac">0</span> m/s²</div>
+        <div>总加速度 a: <span id="aTotal">0</span> m/s²</div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

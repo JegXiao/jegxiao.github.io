@@ -5,7 +5,7 @@ const projects = [
     { name: "我要验牌", url: "我要验牌/index.html" },
     { name: "F1起跑反应测试🏎️", url: "f1_reaction_test.html" },
     { name: "键盘钢琴", url: "钢琴.html" },
-    // { name: "……建设中", url: "#" },
+    { name: "赛车摩擦圆模拟", url: "赛车摩擦圆模拟/index.html" },
     // { name: "……建设中", url: "#" },
     // { name: "……建设中", url: "#" },
     // { name: "……建设中", url: "#" },

@@ -1,0 +1,75 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+    background: #111;
+    color: white;
+}
+
+.top {
+    flex: 3;
+    display: flex;
+}
+
+.left, .right {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#ggCanvas {
+    background: #111;
+}
+
+#joystickArea {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#gridCanvas {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#joystick {
+    width: 20px;
+    height: 20px;
+    background: #0af;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    cursor: grab;
+    z-index: 10;
+}
+
+#floatingInfo {
+    position: absolute;
+    background: rgba(0,0,0,0.7);
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    pointer-events: none;
+    z-index: 20;
+}
+
+.bottom {
+    flex: 1;
+    border-top: 1px solid #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dataBox {
+    display: flex;
+    gap: 40px;
+    font-size: 18px;
+}
