@@ -4,7 +4,7 @@ const projects = [
     { name: "何意味", url: "何意味/何意味.html" },
     { name: "我要验牌", url: "我要验牌/index.html" },
     { name: "F1起跑反应测试🏎️", url: "f1_reaction_test.html" },
-    { name: "钢琴模拟器", url: "钢琴.html" },
+    { name: "键盘钢琴", url: "钢琴.html" },
     // { name: "……建设中", url: "#" },
     // { name: "……建设中", url: "#" },
     // { name: "……建设中", url: "#" },
