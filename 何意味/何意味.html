@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <title>何意味 · 何意味</title>
 
-    <link rel="icon" href="../图标/个人LOGO_32.ico" sizes="32x32">
-    <link rel="icon" href="../图标/个人LOGO_128.ico" sizes="128x128">
-    <link rel="apple-touch-icon" href="../图标/个人LOGO_256.ico">
+    <!-- 浏览器通用图标 (SVG 方案，自动适应各种尺寸) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>︎❔︎</text></svg>">
 
+    <!-- 针对 iOS 设备 (Apple Touch Icon) -->
+    <!-- 注意：iOS 不原生支持在苹果桌面图标上渲染 SVG Emoji，
+         如果需要完美效果建议使用图片；但如果坚持用代码，可保留此 SVG 链接 -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22white%22/><text y=%22.9em%22 font-size=%2280%22 x=%225%22>❔︎</text></svg>">
     <style>
         body {
             display: flex;
