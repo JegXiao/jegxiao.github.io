@@ -6,7 +6,7 @@ const projects = [
     { name: "F1起跑反应测试🏎️", url: "F1反应测试/f1_reaction_test.html" },
     { name: "键盘钢琴", url: "钢琴/钢琴.html" },
     { name: "赛车摩擦圆模拟🏎️", url: "赛车摩擦圆模拟/index.html" },
-    // { name: "……建设中", url: "#" },
+    { name: "汉诺塔演示", url: "汉诺塔演示器/汉诺塔演示器.html" },
     // { name: "……建设中", url: "#" },
     // { name: "……建设中", url: "#" },
     // { name: "……建设中", url: "#" },
