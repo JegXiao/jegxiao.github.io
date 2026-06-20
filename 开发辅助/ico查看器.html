@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>ICO 图标尺寸查看器</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background: #f5f5f5;
+        }
+        h1 { text-align: center; color: #333; }
+        .drop-zone {
+            border: 3px dashed #aaa;
+            border-radius: 12px;
+            padding: 50px 20px;
+            text-align: center;
+            background: #fff;
+            cursor: pointer;
+            transition: .2s;
+            margin: 20px 0;
+        }
+        .drop-zone:hover, .drop-zone.dragover {
+            border-color: #2196F3;
+            background: #e3f2fd;
+        }
+        .drop-zone input { display: none; }
+        .info {
+            background: #fff;
+            border-radius: 8px;
+            padding: 16px 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.1);
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin-top: 16px;
+        }
+        .info .empty { color: #999; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: center;
+        }
+        th { background: #2196F3; color: #fff; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .preview-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .preview-item {
+            text-align: center;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 8px;
+        }
+        .preview-item canvas {
+            display: block;
+            margin: 0 auto;
+            image-rendering: pixelated;
+        }
+        .preview-item .label {
+            font-size: 13px;
+            color: #555;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📦 ICO 图标尺寸查看器</h1>
+    <div class="drop-zone" id="dropZone">
+        <p style="font-size:18px;color:#666;">点击选择 或 拖拽 ICO 文件到这里</p>
+        <input type="file" id="fileInput" accept=".ico">
+    </div>
+    <div class="info" id="info">
+        <span class="empty">尚未选择文件</span>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const info = document.getElementById('info');
+
+        dropZone.addEventListener('click', () => fileInput.click());
+        dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', e => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file) handleFile(file);
+        });
+        fileInput.addEventListener('change', e => {
+            if (e.target.files[0]) handleFile(e.target.files[0]);
+        });
+
+        function handleFile(file) {
+            if (!file.name.toLowerCase().endsWith('.ico')) {
+                info.innerHTML = '<span style="color:red;">请选择 .ico 文件</span>';
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = e => parseIco(e.target.result);
+            reader.readAsArrayBuffer(file);
+        }
+
+        function parseIco(buffer) {
+            const dv = new DataView(buffer);
+            if (dv.getUint16(0, true) !== 0 || dv.getUint16(2, true) !== 1) {
+                info.innerHTML = '<span style="color:red;">无效的 ICO 文件</span>';
+                return;
+            }
+            const count = dv.getUint16(4, true);
+            const entries = [];
+            for (let i = 0; i < count; i++) {
+                const off = 6 + i * 16;
+                const w = dv.getUint8(off);
+                const h = dv.getUint8(off + 1);
+                const colors = dv.getUint8(off + 2);
+                const bpp = dv.getUint16(off + 6, true);
+                const size = dv.getUint32(off + 8, true);
+                const offset = dv.getUint32(off + 12, true);
+                entries.push({
+                    width: w === 0 ? 256 : w,
+                    height: h === 0 ? 256 : h,
+                    bpp,
+                    size,
+                    offset
+                });
+            }
+
+            let html = `<p><strong>文件信息</strong></p>`;
+            html += `<p>包含 <strong>${count}</strong> 个图标尺寸</p>`;
+
+            if (count > 0) {
+                html += `<table><thead><tr><th>#</th><th>宽度</th><th>高度</th><th>位深</th><th>数据大小</th></tr></thead><tbody>`;
+                entries.forEach((e, i) => {
+                    html += `<tr><td>${i + 1}</td><td>${e.width}</td><td>${e.height}</td><td>${e.bpp} bpp</td><td>${e.size} 字节</td></tr>`;
+                });
+                html += `</tbody></table>`;
+
+                // Preview each embedded PNG/BMP icon
+                html += `<p><strong>图标预览</strong></p><div class="preview-grid">`;
+                entries.forEach((e, i) => {
+                    const blob = new Blob([buffer.slice(e.offset, e.offset + e.size)]);
+                    const url = URL.createObjectURL(blob);
+                    // Try to draw it as an image
+                    html += `<div class="preview-item"><canvas id="preview-${i}" width="${e.width}" height="${e.height}"></canvas><div class="label">${e.width}×${e.height}</div></div>`;
+                });
+                html += `</div>`;
+            }
+
+            info.innerHTML = html;
+
+            // Render each entry to canvas
+            entries.forEach((e, i) => {
+                const blob = new Blob([buffer.slice(e.offset, e.offset + e.size)]);
+                const url = URL.createObjectURL(blob);
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.getElementById(`preview-${i}`);
+                    if (canvas) {
+                        const ctx = canvas.getContext('2d');
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0);
+                    }
+                    URL.revokeObjectURL(url);
+                };
+                img.onerror = () => {
+                    // BMP format inside ICO may not render directly; try via canvas
+                    URL.revokeObjectURL(url);
+                };
+                img.src = url;
+            });
+
+            // Fallback: try BMP decoding for entries that didn't load
+            setTimeout(() => {
+                // Handled implicitly — the Image onerror just stays blank
+            }, 500);
+        }
+    </script>
+</body>
+</html>

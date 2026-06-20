@@ -8,6 +8,7 @@ const projects = [
     { name: "赛车摩擦圆模拟🏎️", url: "赛车摩擦圆模拟/index.html" },
     { name: "汉诺塔演示", url: "汉诺塔演示器/汉诺塔演示器.html" },
     { name: "⭐我的SolidWorks建模作品⭐", url: "SW/首页.html" },
+    { name: "ICO图标尺寸查看器", url: "开发辅助/ico查看器.html" },
     // { name: "……建设中", url: "#" },
     // { name: "……建设中", url: "#" },
     // { name: "……建设中", url: "#" },
@@ -27,8 +28,10 @@ projects.forEach(proj => {
     anchor.className = 'btn';
     anchor.textContent = proj.name;
 
-    // 如果是外部链接，可以取消下面这一行的注释，使其在新窗口打开
-    // anchor.target = "_blank";
+    if (proj.name !== '本页面') {
+        anchor.target = '_blank';
+        anchor.rel = 'noopener noreferrer';
+    }
 
     gridContainer.appendChild(anchor);
 });
