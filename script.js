@@ -7,7 +7,7 @@ const projects = [
     { name: "键盘钢琴", url: "钢琴/钢琴.html" },
     { name: "赛车摩擦圆模拟🏎️", url: "赛车摩擦圆模拟/index.html" },
     { name: "汉诺塔演示", url: "汉诺塔演示器/汉诺塔演示器.html" },
-    // { name: "……建设中", url: "#" },
+    { name: "⭐我的SolidWorks建模作品⭐", url: "SW/首页.html" },
     // { name: "……建设中", url: "#" },
     // { name: "……建设中", url: "#" },
     // { name: "……建设中", url: "#" },
