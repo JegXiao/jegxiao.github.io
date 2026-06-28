@@ -6,8 +6,27 @@
     <title>⭐我的SolidWorks建模作品⭐</title>
 
     <link rel="icon" href="图标/SW_LOGO_16_24_32_48_64_72_80_96_128_256.ico" sizes="16x16 24x24 32x32 48x48 64x64 72x72 80x80 96x96 128x128 256x256">
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <div id="app"></div>
+
+    <!-- 详情弹窗 -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <h2 id="modal-title"></h2>
+            <div class="description" id="modal-desc"></div>
+            <div class="gallery">
+                <img class="gallery-main" id="modal-main" src="">
+                <div class="gallery-thumbs" id="modal-thumbs"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
