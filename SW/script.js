@@ -95,18 +95,45 @@ function findModel(id) {
     return null;
 }
 
+// ===== 下载按钮 =====
+document.getElementById('downloadBtn').addEventListener('click', () => {
+    const model = findModel(document.getElementById('modal').dataset.modelId);
+    if (!model || !model.downloads || model.downloads.length === 0) return;
+
+    const list = document.getElementById('downloadList');
+    list.innerHTML = '';
+    model.downloads.forEach(f => {
+        const item = document.createElement('a');
+        item.className = 'download-item';
+        item.href = f.url;
+        item.download = f.name;
+        item.textContent = f.name;
+        list.appendChild(item);
+    });
+
+    document.getElementById('downloadModal').classList.add('show');
+});
+
 // ===== 弹窗关闭 =====
 document.getElementById('modal-close').addEventListener('click', closeModal);
 document.getElementById('modal').addEventListener('click', (e) => {
     if (e.target === e.currentTarget) closeModal();
+});
+document.getElementById('dlModalClose').addEventListener('click', closeDownloadModal);
+document.getElementById('downloadModal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) closeDownloadModal();
 });
 
 function closeModal() {
     document.getElementById('modal').classList.remove('show');
 }
 
+function closeDownloadModal() {
+    document.getElementById('downloadModal').classList.remove('show');
+}
+
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Escape') { closeModal(); closeDownloadModal(); }
     if (e.key === 'ArrowLeft') {
         const overlay = document.getElementById('modal');
         if (!overlay.classList.contains('show')) return;

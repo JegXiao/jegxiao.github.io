@@ -16,6 +16,10 @@ const categories = [
                     "models/钥匙扣/大雁塔/0.png",
                     "models/钥匙扣/pic1.jpg",
                     "models/钥匙扣/pic2.jpg"
+                ],
+                downloads: [
+                    { name: "大雁塔.STEP", url: "models/钥匙扣/大雁塔/大雁塔.STEP" },
+                    { name: "大雁塔.STL", url: "models/钥匙扣/大雁塔/大雁塔.STL" }
                 ]
             },
 
@@ -64,7 +68,11 @@ const categories = [
 //             brief: "卡片上显示的短简介",
 //             description: "点击后的完整详情",
 //             cover: "models/文件夹名/封面图.jpg",
-//             images: ["models/文件夹名/图1.jpg", "models/文件夹名/图2.jpg"]
+//             images: ["models/文件夹名/图1.jpg", "models/文件夹名/图2.jpg"],
+//             downloads: [
+//                 { name: "文件1.STEP", url: "models/文件夹名/文件1.STEP" },
+//                 { name: "文件2.STL", url: "models/文件夹名/文件2.STL" }
+//             ]       // 无可下载文件时可省略此字段
 //         }
 //     ]
 // }
