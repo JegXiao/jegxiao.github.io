@@ -6,47 +6,58 @@ function getSystemTheme() {
 }
 
 function getStoredTheme() {
-  return localStorage.getItem(THEME_KEY);
+  return localStorage.getItem(THEME_KEY) || 'system';
 }
 
 function resolveTheme() {
   const stored = getStoredTheme();
-  if (stored === 'system' || !stored) return getSystemTheme();
-  return stored;
+  return stored === 'system' ? getSystemTheme() : stored;
 }
 
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
-  updateThemeIcon(theme);
 }
 
-function updateThemeIcon(theme) {
-  const btn = document.getElementById('themeToggle');
+function updateThemeLabel(theme) {
+  const btn = document.querySelector('.dropdown-toggle');
   if (!btn) return;
-  const stored = getStoredTheme();
-  if (stored === 'system') {
-    btn.textContent = '⚙';
-    btn.title = stored;
-  } else {
-    btn.textContent = theme === 'dark' ? '☀' : '☾';
-    btn.title = theme === 'dark' ? 'light' : 'dark';
-  }
+  const key = theme === 'light' ? 'theme_light' : theme === 'dark' ? 'theme_dark' : 'theme_system';
+  btn.textContent = t(key);
 }
 
-function cycleTheme() {
-  const stored = getStoredTheme();
-  const next = stored === 'light' ? 'dark' : stored === 'dark' ? 'system' : 'light';
-  localStorage.setItem(THEME_KEY, next);
-  const resolved = next === 'system' ? getSystemTheme() : next;
-  applyTheme(resolved);
+function toggleDropdown(el) {
+  document.querySelectorAll('.dropdown.open').forEach(d => {
+    if (d !== el.closest('.dropdown')) d.classList.remove('open');
+  });
+  el.closest('.dropdown').classList.toggle('open');
 }
+
+function setTheme(theme) {
+  localStorage.setItem(THEME_KEY, theme);
+  applyTheme(theme === 'system' ? getSystemTheme() : theme);
+  updateThemeLabel(theme);
+  closeAllDropdowns();
+}
+
+function closeAllDropdowns() {
+  document.querySelectorAll('.dropdown.open').forEach(el => el.classList.remove('open'));
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  renderLang();
+  closeAllDropdowns();
+}
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.dropdown')) closeAllDropdowns();
+});
 
 PREFERS_DARK.addEventListener('change', () => {
-  if (getStoredTheme() === 'system' || !getStoredTheme()) {
-    applyTheme(getSystemTheme());
-  }
+  if (getStoredTheme() === 'system') applyTheme(getSystemTheme());
 });
 
 document.addEventListener('DOMContentLoaded', () => {
   applyTheme(resolveTheme());
+  updateThemeLabel(getStoredTheme());
 });

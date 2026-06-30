@@ -6,10 +6,10 @@ const i18n = {
     nav_projects: '项目',
     nav_team: '团队',
     hero_title: 'OpenFlow 开放流动',
-    hero_desc: '探索 · 创新 · 协作 —— 大学生科研项目',
-    hero_btn: '了解我们',
+    hero_desc: '探索 · 创新 · 协作',
+    hero_btn: '了解更多',
     about_title: '关于项目',
-    about_text: 'OpenFlow 是一个由大学生发起的研究项目，致力于推动学术开放流动。',
+    about_text: 'OpenFlow（开放流动）是一个由大学生发起的流体力学研究与讨论开源平台。',
     projects_title: '研究项目',
     proj_1_title: '项目一',
     proj_1_desc: '项目简介占位文字。',
@@ -34,20 +34,70 @@ const i18n = {
     news_3_title: '动态标题三',
     news_3_meta: '2026年4月',
     news_3_desc: '动态内容占位文字。',
+    theme_light: '主题：亮',
+    theme_dark: '主题：暗',
+    theme_system: '主题：跟随系统',
+    lang_label: '语言：简体中文',
+    lang_zh: '语言：简体中文',
+    lang_zhTW: '语言：繁體中文',
+    lang_en: 'Language: English',
     footer_text: '© 2026 OpenFlow 开放流动',
-    lang_label: 'EN',
+  },
+  'zh-TW': {
+    site_title: 'OpenFlow 開放流動',
+    nav_home: '首頁',
+    nav_about: '關於',
+    nav_projects: '項目',
+    nav_team: '團隊',
+    hero_title: 'OpenFlow 開放流動',
+    hero_desc: '探索 · 創新 · 協作',
+    hero_btn: '了解更多',
+    about_title: '關於項目',
+    about_text: 'OpenFlow（開放流動）是一個由大學生發起的流體力學研究與討論開源平台。',
+    projects_title: '研究項目',
+    proj_1_title: '項目一',
+    proj_1_desc: '項目簡介佔位文字。',
+    proj_2_title: '項目二',
+    proj_2_desc: '項目簡介佔位文字。',
+    proj_3_title: '項目三',
+    proj_3_desc: '項目簡介佔位文字。',
+    team_title: '團隊成員',
+    member_1_name: '成員一',
+    member_1_role: '角色',
+    member_2_name: '成員二',
+    member_2_role: '角色',
+    member_3_name: '成員三',
+    member_3_role: '角色',
+    news_title: '動態',
+    news_1_title: '動態標題一',
+    news_1_meta: '2026年6月',
+    news_1_desc: '動態內容佔位文字。',
+    news_2_title: '動態標題二',
+    news_2_meta: '2026年5月',
+    news_2_desc: '動態內容佔位文字。',
+    news_3_title: '動態標題三',
+    news_3_meta: '2026年4月',
+    news_3_desc: '動態內容佔位文字。',
+    theme_light: '主題：亮',
+    theme_dark: '主題：暗',
+    theme_system: '主題：跟隨系統',
+    lang_label: '語言：繁體中文',
+    lang_zh: '語言：简体中文',
+    lang_zhTW: '語言：繁體中文',
+    lang_en: 'Language: English',
+    footer_text: '© 2026 OpenFlow 開放流動',
   },
   en: {
-    site_title: 'OpenFlow 开放流动',
+    site_title: 'OpenFlow',
     nav_home: 'Home',
     nav_about: 'About',
     nav_projects: 'Projects',
     nav_team: 'Team',
     hero_title: 'OpenFlow',
-    hero_desc: 'Explore · Innovate · Collaborate — A Student Research Project',
+    hero_desc: 'Explore · Innovate · Collaborate',
     hero_btn: 'Learn More',
     about_title: 'About',
-    about_text: 'OpenFlow is a student-led research project dedicated to advancing open academic exchange.',
+    about_text: 'OpenFlow is a student-established open-source platform for fluid mechanics research and discussion.',
     projects_title: 'Research Projects',
     proj_1_title: 'Project 1',
     proj_1_desc: 'Project description placeholder.',
@@ -72,15 +122,21 @@ const i18n = {
     news_3_title: 'Update 3',
     news_3_meta: 'April 2026',
     news_3_desc: 'Update content placeholder.',
+    theme_light: 'Theme: Light',
+    theme_dark: 'Theme: Dark',
+    theme_system: 'Theme: System',
+    lang_label: 'Language: English',
+    lang_zh: '语言：简体中文',
+    lang_zhTW: '语言：繁體中文',
+    lang_en: 'Language: English',
     footer_text: '© 2026 OpenFlow',
-    lang_label: '中',
   },
 };
 
 let currentLang = localStorage.getItem('of-lang') || 'zh';
 
 function t(key) {
-  return i18n[currentLang][key] || key;
+  return (i18n[currentLang] && i18n[currentLang][key]) || key;
 }
 
 function renderLang() {
@@ -92,11 +148,10 @@ function renderLang() {
       el.textContent = t(key);
     }
   });
-  document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
+  if (typeof updateThemeLabel === 'function') {
+    updateThemeLabel(getStoredTheme());
+  }
+  const langMap = { zh: 'zh-CN', 'zh-TW': 'zh-TW', en: 'en' };
+  document.documentElement.lang = langMap[currentLang] || 'zh-CN';
   localStorage.setItem('of-lang', currentLang);
-}
-
-function toggleLang() {
-  currentLang = currentLang === 'zh' ? 'en' : 'zh';
-  renderLang();
 }

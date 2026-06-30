@@ -63,10 +63,6 @@ nav a:hover, nav a.active { background: var(--nav-hover); color: var(--accent); 
 .controls button:hover {
   background: var(--nav-hover); color: var(--accent); border-color: var(--accent-light);
 }
-.lang-switch {
-  padding: 4px 12px !important; width: auto !important; border-radius: var(--radius-sm) !important;
-  font-size: .8rem; font-weight: 600;
-}
 
 /* Hero */
 .hero {

@@ -131,6 +131,66 @@
   margin-top: 2px;
 }
 
+/* Dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  padding: 6px 14px !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: var(--radius-sm) !important;
+  font-size: .8rem !important;
+  font-weight: 600;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+.dropdown-toggle:hover {
+  background: var(--nav-hover);
+  color: var(--accent);
+  border-color: var(--accent-light);
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 160px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  z-index: 200;
+  overflow: hidden;
+}
+.dropdown.open .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu button {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: .85rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.dropdown-menu button:hover {
+  background: var(--nav-hover);
+  color: var(--accent);
+}
+
 /* Media queries for components */
 @media (max-width: 768px) {
   .card-featured {
