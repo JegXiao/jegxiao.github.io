@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>康威生命游戏</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="game-container">
+            <div class="header-container">
+                <h1>康威生命游戏</h1>
+                <div style="font-size:0.8rem;color:#888;margin-right:10px">Ctrl+Z / Ctrl+Y 可用 &nbsp;|&nbsp; 空格键可用</div>
+                <div class="controls">
+                    <label>画布宽高: <input type="number" id="widthInput" value="1700" style="width:60px"> x <input type="number" id="heightInput" value="1000" style="width:60px"></label>
+                    <button onclick="applySize()">清空当前画布并应用新尺寸</button>
+                    <label>FPS: <input type="number" id="fpsInput" value="50" style="width:40px" onkeydown="if(event.key==='Enter')updateFps()"> (回车应用)</label>
+                    <span style="width:30px"></span>
+                    <button id="runBtn" class="btn-start" onclick="toggleRunning()">开始</button>
+                    <button onclick="clearGrid()">清空</button>
+                </div>
+            </div>
+            <canvas id="gameCanvas" width="1700" height="1000"></canvas>
+        </div>
+        <div class="toolbar" id="toolbar">
+            <h3>工具栏</h3>
+        </div>
+    </div>
+    <script src="patterns.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
