@@ -15,6 +15,38 @@ header {
     color: #333;
 }
 
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.btn-header {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    background-color: #fff;
+    color: #007AFF;
+    border: 2px solid #007AFF;
+    padding: 8px 18px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 1.4;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+.btn-header:hover {
+    background-color: #007AFF;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,122,255,0.2);
+}
+
 /* 网格容器：每行4个按钮，手机端自动调整 */
 .grid-container {
     display: grid;

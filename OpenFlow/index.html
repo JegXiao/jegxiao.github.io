@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="site_title">OpenFlow开放流动</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo"><span data-i18n="site_title">OpenFlow开放流动</span><span>.</span></div>
+    <nav>
+      <a href="#" class="active" data-i18n="nav_home">首页</a>
+      <a href="#" data-i18n="nav_about">关于</a>
+      <a href="#" data-i18n="nav_projects">项目</a>
+      <a href="#" data-i18n="nav_team">团队</a>
+    </nav>
+    <div class="controls">
+      <button id="themeToggle" onclick="cycleTheme()" title="light">☾</button>
+      <button class="lang-switch" onclick="toggleLang()" data-i18n="lang_label">EN</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <h1 data-i18n="hero_title">OpenFlow 开放流动</h1>
+      <p data-i18n="hero_desc">探索 · 创新 · 协作 —— 大学生科研项目</p>
+      <button class="btn" data-i18n="hero_btn">了解我们</button>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title" data-i18n="about_title">关于项目</h2>
+      <p class="about-text" data-i18n="about_text">OpenFlow 是一个由大学生发起的研究项目，致力于推动学术开放流动。</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title" data-i18n="projects_title">研究项目</h2>
+      <div class="grid-3">
+        <article class="card">
+          <h3><a href="#"><span data-i18n="proj_1_title">项目一</span></a></h3>
+          <p data-i18n="proj_1_desc">项目简介占位文字。</p>
+        </article>
+        <article class="card">
+          <h3><a href="#"><span data-i18n="proj_2_title">项目二</span></a></h3>
+          <p data-i18n="proj_2_desc">项目简介占位文字。</p>
+        </article>
+        <article class="card">
+          <h3><a href="#"><span data-i18n="proj_3_title">项目三</span></a></h3>
+          <p data-i18n="proj_3_desc">项目简介占位文字。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title" data-i18n="team_title">团队成员</h2>
+      <div class="grid-3">
+        <div class="card" style="text-align:center;">
+          <div style="width:80px;height:80px;border-radius:50%;background:var(--hero-bg);margin:0 auto 12px;"></div>
+          <h3 data-i18n="member_1_name">成员一</h3>
+          <p style="font-size:.85rem;color:var(--text-muted);" data-i18n="member_1_role">角色</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div style="width:80px;height:80px;border-radius:50%;background:var(--hero-bg);margin:0 auto 12px;"></div>
+          <h3 data-i18n="member_2_name">成员二</h3>
+          <p style="font-size:.85rem;color:var(--text-muted);" data-i18n="member_2_role">角色</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div style="width:80px;height:80px;border-radius:50%;background:var(--hero-bg);margin:0 auto 12px;"></div>
+          <h3 data-i18n="member_3_name">成员三</h3>
+          <p style="font-size:.85rem;color:var(--text-muted);" data-i18n="member_3_role">角色</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title" data-i18n="news_title">动态</h2>
+      <div class="grid-2">
+        <article class="card">
+          <div class="card-meta" data-i18n="news_1_meta">2026年6月</div>
+          <h3><a href="#"><span data-i18n="news_1_title">动态标题一</span></a></h3>
+          <p data-i18n="news_1_desc">动态内容占位文字。</p>
+        </article>
+        <article class="card">
+          <div class="card-meta" data-i18n="news_2_meta">2026年5月</div>
+          <h3><a href="#"><span data-i18n="news_2_title">动态标题二</span></a></h3>
+          <p data-i18n="news_2_desc">动态内容占位文字。</p>
+        </article>
+        <article class="card">
+          <div class="card-meta" data-i18n="news_3_meta">2026年4月</div>
+          <h3><a href="#"><span data-i18n="news_3_title">动态标题三</span></a></h3>
+          <p data-i18n="news_3_desc">动态内容占位文字。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div data-i18n="footer_text">© 2026 OpenFlow 开放流动</div>
+  </div>
+</footer>
+
+<script src="js/theme.js"></script>
+<script src="js/i18n.js"></script>
+<script>renderLang();</script>
+</body>
+</html>
