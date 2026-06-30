@@ -9,6 +9,7 @@ const projects = [
     { name: "汉诺塔演示", url: "汉诺塔演示器/汉诺塔演示器.html" },
     { name: "⭐我的SolidWorks建模作品⭐", url: "SW/首页.html" },
     { name: "ICO图标尺寸查看器", url: "开发辅助/ico查看器.html" },
+    { name: "康威生命游戏", url: "康威生命游戏/index.html" },
     // { name: "……建设中", url: "#" },
     // { name: "……建设中", url: "#" },
     // { name: "……建设中", url: "#" },
