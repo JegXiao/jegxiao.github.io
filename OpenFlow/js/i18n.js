@@ -41,7 +41,6 @@ const i18n = {
     lang_zh: '语言：简体中文',
     lang_zhTW: '语言：繁體中文',
     lang_en: 'Language: English',
-    footer_text: '© 2026 OpenFlow 开放流动',
   },
   'zh-TW': {
     site_title: 'OpenFlow 開放流動',
@@ -85,7 +84,6 @@ const i18n = {
     lang_zh: '語言：简体中文',
     lang_zhTW: '語言：繁體中文',
     lang_en: 'Language: English',
-    footer_text: '© 2026 OpenFlow 開放流動',
   },
   en: {
     site_title: 'OpenFlow',
@@ -129,7 +127,6 @@ const i18n = {
     lang_zh: '语言：简体中文',
     lang_zhTW: '语言：繁體中文',
     lang_en: 'Language: English',
-    footer_text: '© 2026 OpenFlow',
   },
 };
 
