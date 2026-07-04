@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-i18n="site_title">OpenFlow 开放流动</title>
+<script>var t=localStorage.getItem('of-theme');if(t==='dark'||(t!=='light'&&window.matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.setAttribute('data-theme','dark')</script>
+<title data-i18n="page_title">OpenFlow 开放流动</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -15,12 +16,12 @@
 
 <header>
   <div class="header-inner">
-    <div class="logo">OpenFlow 开放流动<span></span></div>
+    <div class="logo">OpenFlow 开放流动<span>.</span></div>
     <nav>
-      <a href="#" class="active" data-i18n="nav_home">首页</a>
-      <a href="#" data-i18n="nav_about">关于</a>
-      <a href="#" data-i18n="nav_projects">项目</a>
-      <a href="#" data-i18n="nav_team">团队</a>
+      <a href="index.html" class="active" data-i18n="nav_home">首页</a>
+      <a href="关于.html" data-i18n="nav_about">关于</a>
+      <a href="项目.html" data-i18n="nav_projects">项目</a>
+      <a href="团队.html" data-i18n="nav_team">团队</a>
     </nav>
     <div class="controls">
       <div class="dropdown">
@@ -49,56 +50,6 @@
       <h1 data-i18n="hero_title">OpenFlow 开放流动</h1>
       <p data-i18n="hero_desc">探索 · 创新 · 协作</p>
       <button class="btn" data-i18n="hero_btn">了解更多</button>
-    </div>
-  </section>
-
-  <section>
-    <div class="container">
-      <h2 class="section-title" data-i18n="about_title">关于项目</h2>
-      <p class="about-text" data-i18n="about_text">OpenFlow（开放流动）是一个由大学生发起的流体力学研究与讨论开源平台。</p>
-    </div>
-  </section>
-
-  <section>
-    <div class="container">
-      <h2 class="section-title" data-i18n="projects_title">研究项目</h2>
-      <div class="grid-3">
-        <article class="card">
-          <h3><a href="#"><span data-i18n="proj_1_title">项目一</span></a></h3>
-          <p data-i18n="proj_1_desc">项目简介占位文字。</p>
-        </article>
-        <article class="card">
-          <h3><a href="#"><span data-i18n="proj_2_title">项目二</span></a></h3>
-          <p data-i18n="proj_2_desc">项目简介占位文字。</p>
-        </article>
-        <article class="card">
-          <h3><a href="#"><span data-i18n="proj_3_title">项目三</span></a></h3>
-          <p data-i18n="proj_3_desc">项目简介占位文字。</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="container">
-      <h2 class="section-title" data-i18n="team_title">团队成员</h2>
-      <div class="grid-3">
-        <div class="card" style="text-align:center;">
-          <div style="width:80px;height:80px;border-radius:50%;background:var(--hero-bg);margin:0 auto 12px;"></div>
-          <h3 data-i18n="member_1_name">成员一</h3>
-          <p style="font-size:.85rem;color:var(--text-muted);" data-i18n="member_1_role">角色</p>
-        </div>
-        <div class="card" style="text-align:center;">
-          <div style="width:80px;height:80px;border-radius:50%;background:var(--hero-bg);margin:0 auto 12px;"></div>
-          <h3 data-i18n="member_2_name">成员二</h3>
-          <p style="font-size:.85rem;color:var(--text-muted);" data-i18n="member_2_role">角色</p>
-        </div>
-        <div class="card" style="text-align:center;">
-          <div style="width:80px;height:80px;border-radius:50%;background:var(--hero-bg);margin:0 auto 12px;"></div>
-          <h3 data-i18n="member_3_name">成员三</h3>
-          <p style="font-size:.85rem;color:var(--text-muted);" data-i18n="member_3_role">角色</p>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -133,7 +84,8 @@
 </footer>
 
 <script src="js/theme.js"></script>
-<script src="js/i18n.js"></script>
+<script src="index-i18n.js"></script>
+<script src="js/i18n-core.js"></script>
 <script>renderLang();</script>
 </body>
 </html>

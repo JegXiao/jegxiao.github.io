@@ -43,12 +43,6 @@ function closeAllDropdowns() {
   document.querySelectorAll('.dropdown.open').forEach(el => el.classList.remove('open'));
 }
 
-function setLang(lang) {
-  currentLang = lang;
-  renderLang();
-  closeAllDropdowns();
-}
-
 document.addEventListener('click', (e) => {
   if (!e.target.closest('.dropdown')) closeAllDropdowns();
 });

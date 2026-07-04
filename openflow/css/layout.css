@@ -8,7 +8,9 @@ body {
   color: var(--text-primary);
   line-height: 1.7;
   transition: background var(--transition), color var(--transition);
+  display: flex; flex-direction: column; min-height: 100vh;
 }
+main { flex: 1; }
 
 a { color: var(--accent); text-decoration: none; transition: color var(--transition); }
 a:hover { color: var(--accent-light); }
