@@ -21,12 +21,8 @@ function applyTheme(theme) {
 function updateThemeLabel(theme) {
   const btn = document.querySelector('.dropdown-toggle');
   if (!btn) return;
-  if (currentLang === 'zh') {
-    btn.textContent = theme === 'light' ? '主题：亮' : theme === 'dark' ? '主题：暗' : '主题：跟随系统';
-  } else {
-    const key = theme === 'light' ? 'theme_light' : theme === 'dark' ? 'theme_dark' : 'theme_system';
-    btn.textContent = t(key);
-  }
+  const key = theme === 'light' ? '主题：亮' : theme === 'dark' ? '主题：暗' : '主题：跟随系统';
+  btn.textContent = t(key);
 }
 
 function toggleDropdown(el) {
@@ -55,7 +51,15 @@ PREFERS_DARK.addEventListener('change', () => {
   if (getStoredTheme() === 'system') applyTheme(getSystemTheme());
 });
 
+function highlightActiveNav() {
+  const last = decodeURIComponent(location.pathname.split('/').pop());
+  document.querySelectorAll('nav a').forEach(a => {
+    if (a.getAttribute('href') === last) a.classList.add('active');
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   applyTheme(resolveTheme());
   updateThemeLabel(getStoredTheme());
+  highlightActiveNav();
 });

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>var t=localStorage.getItem('of-theme');if(t==='dark'||(t!=='light'&&window.matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.setAttribute('data-theme','dark')</script>
-<title data-i18n="page_title">关于 - OpenFlow 开放流动</title>
+<title data-i18n="关于 - OpenFlow 开放流动">关于 - OpenFlow 开放流动</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -18,22 +18,22 @@
   <div class="header-inner">
     <div class="logo">OpenFlow 开放流动<span>.</span></div>
     <nav>
-      <a href="主页.html" data-i18n="nav_home">首页</a>
-      <a href="关于.html" class="active" data-i18n="nav_about">关于</a>
-      <a href="项目.html" data-i18n="nav_projects">项目</a>
-      <a href="团队.html" data-i18n="nav_team">团队</a>
+      <a href="1首页.html" data-i18n="首页">首页</a>
+      <a href="2关于.html" data-i18n="关于">关于</a>
+      <a href="3项目.html" data-i18n="项目">项目</a>
+      <a href="4团队.html" data-i18n="团队">团队</a>
     </nav>
     <div class="controls">
       <div class="dropdown">
         <button class="dropdown-toggle" onclick="toggleDropdown(this)">主题</button>
         <div class="dropdown-menu">
-          <button onclick="setTheme('light')" data-i18n="theme_light">主题：亮</button>
-          <button onclick="setTheme('dark')" data-i18n="theme_dark">主题：暗</button>
-          <button onclick="setTheme('system')" data-i18n="theme_system">主题：跟随系统</button>
+          <button onclick="setTheme('light')" data-i18n="主题：亮">主题：亮</button>
+          <button onclick="setTheme('dark')" data-i18n="主题：暗">主题：暗</button>
+          <button onclick="setTheme('system')" data-i18n="主题：跟随系统">主题：跟随系统</button>
         </div>
       </div>
       <div class="dropdown">
-        <button class="dropdown-toggle" onclick="toggleDropdown(this)" data-i18n="lang_label">语言：简体中文</button>
+        <button class="dropdown-toggle" onclick="toggleDropdown(this)" data-i18n="语言：简体中文">语言：简体中文</button>
         <div class="dropdown-menu">
           <button onclick="setLang('zh')">语言：简体中文</button>
           <button onclick="setLang('zh-TW')">语言：繁體中文</button>
@@ -47,8 +47,8 @@
 <main>
   <section>
     <div class="container">
-      <h2 class="section-title" data-i18n="about_title">关于项目</h2>
-      <p class="about-text" data-i18n="about_text">OpenFlow（开放流动）是一个由大学生发起的流体力学研究与讨论开源平台。</p>
+      <h2 class="section-title" data-i18n="关于项目">关于项目</h2>
+      <p class="about-text" data-i18n="OpenFlow（开放流动）是一个由大学生发起的流体力学研究与讨论开源平台。">OpenFlow（开放流动）是一个由大学生发起的流体力学研究与讨论开源平台。</p>
     </div>
   </section>
 </main>
@@ -60,8 +60,8 @@
 </footer>
 
 <script src="../js/theme.js"></script>
-<script src="head-i18n.js"></script>
-<script src="关于-i18n.js"></script>
+<script src="0_head-i18n.js"></script>
+<script src="2关于-i18n.js"></script>
 <script src="../js/i18n-core.js"></script>
 <script>renderLang();</script>
 </body>
