@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh-CN" >
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>var t=localStorage.getItem('of-theme');if(t==='dark'||(t!=='light'&&window.matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.setAttribute('data-theme','dark')</script>
-<title data-i18n="page_title">OpenFlow 开放流动</title>
+<title data-i18n="page_title">项目 - OpenFlow 开放流动</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/variables.css">
-<link rel="stylesheet" href="css/layout.css">
-<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="../css/variables.css">
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/components.css">
 </head>
 <body>
 
@@ -18,9 +18,9 @@
   <div class="header-inner">
     <div class="logo">OpenFlow 开放流动<span>.</span></div>
     <nav>
-      <a href="index.html" class="active" data-i18n="nav_home">首页</a>
+      <a href="主页.html" data-i18n="nav_home">首页</a>
       <a href="关于.html" data-i18n="nav_about">关于</a>
-      <a href="项目.html" data-i18n="nav_projects">项目</a>
+      <a href="项目.html" class="active" data-i18n="nav_projects">项目</a>
       <a href="团队.html" data-i18n="nav_team">团队</a>
     </nav>
     <div class="controls">
@@ -45,32 +45,21 @@
 </header>
 
 <main>
-  <section class="hero">
-    <div class="container">
-      <h1 data-i18n="hero_title">OpenFlow 开放流动</h1>
-      <p data-i18n="hero_desc">探索 · 创新 · 协作</p>
-      <button class="btn" data-i18n="hero_btn">了解更多</button>
-    </div>
-  </section>
-
   <section>
     <div class="container">
-      <h2 class="section-title" data-i18n="news_title">动态</h2>
-      <div class="grid-2">
+      <h2 class="section-title" data-i18n="projects_title">研究项目</h2>
+      <div class="grid-3">
         <article class="card">
-          <div class="card-meta" data-i18n="news_1_meta">2026年6月</div>
-          <h3><a href="#"><span data-i18n="news_1_title">动态标题一</span></a></h3>
-          <p data-i18n="news_1_desc">动态内容占位文字。</p>
+          <h3><a href="#"><span data-i18n="proj_1_title">项目一</span></a></h3>
+          <p data-i18n="proj_1_desc">项目简介占位文字。</p>
         </article>
         <article class="card">
-          <div class="card-meta" data-i18n="news_2_meta">2026年5月</div>
-          <h3><a href="#"><span data-i18n="news_2_title">动态标题二</span></a></h3>
-          <p data-i18n="news_2_desc">动态内容占位文字。</p>
+          <h3><a href="#"><span data-i18n="proj_2_title">项目二</span></a></h3>
+          <p data-i18n="proj_2_desc">项目简介占位文字。</p>
         </article>
         <article class="card">
-          <div class="card-meta" data-i18n="news_3_meta">2026年4月</div>
-          <h3><a href="#"><span data-i18n="news_3_title">动态标题三</span></a></h3>
-          <p data-i18n="news_3_desc">动态内容占位文字。</p>
+          <h3><a href="#"><span data-i18n="proj_3_title">项目三</span></a></h3>
+          <p data-i18n="proj_3_desc">项目简介占位文字。</p>
         </article>
       </div>
     </div>
@@ -83,9 +72,10 @@
   </div>
 </footer>
 
-<script src="js/theme.js"></script>
-<script src="index-i18n.js"></script>
-<script src="js/i18n-core.js"></script>
+<script src="../js/theme.js"></script>
+<script src="head-i18n.js"></script>
+<script src="项目-i18n.js"></script>
+<script src="../js/i18n-core.js"></script>
 <script>renderLang();</script>
 </body>
 </html>

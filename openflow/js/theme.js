@@ -21,8 +21,12 @@ function applyTheme(theme) {
 function updateThemeLabel(theme) {
   const btn = document.querySelector('.dropdown-toggle');
   if (!btn) return;
-  const key = theme === 'light' ? 'theme_light' : theme === 'dark' ? 'theme_dark' : 'theme_system';
-  btn.textContent = t(key);
+  if (currentLang === 'zh') {
+    btn.textContent = theme === 'light' ? '主题：亮' : theme === 'dark' ? '主题：暗' : '主题：跟随系统';
+  } else {
+    const key = theme === 'light' ? 'theme_light' : theme === 'dark' ? 'theme_dark' : 'theme_system';
+    btn.textContent = t(key);
+  }
 }
 
 function toggleDropdown(el) {
