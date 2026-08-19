@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>ICO编辑器</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖼️</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22white%22/><text y=%22.9em%22 font-size=%2280%22 x=%225%22>🖼️</text></svg>">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 20px;
+    font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+    background: #f5f5f5;
+    color: #333;
+  }
+  h1 {
+    text-align: center;
+    margin: 0 0 20px 0;
+    color: #222;
+  }
+  .container {
+    display: flex;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .panel {
+    flex: 1;
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    min-height: 500px;
+  }
+  .panel h2 {
+    margin: 0 0 16px 0;
+    font-size: 18px;
+    color: #333;
+    border-bottom: 2px solid #4a90e2;
+    padding-bottom: 8px;
+  }
+  .drop-zone:hover, .drop-zone.dragover {
+    border-color: #4a90e2;
+    background: #f0f7ff;
+    color: #4a90e2;
+  }
+  .drop-zone {
+    display: block;
+    border: 2px dashed #aaa;
+    border-radius: 6px;
+    padding: 24px;
+    text-align: center;
+    color: #777;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+  .drop-zone input[type=file] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .preview-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .preview-item {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 120px;
+  }
+  .preview-item img {
+    image-rendering: pixelated;
+    background:
+      linear-gradient(45deg, #ddd 25%, transparent 25%),
+      linear-gradient(-45deg, #ddd 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #ddd 75%),
+      linear-gradient(-45deg, transparent 75%, #ddd 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+  }
+  .preview-item .size-label {
+    font-size: 12px;
+    color: #555;
+  }
+  .preview-item .btns {
+    display: flex;
+    gap: 4px;
+  }
+  .preview-item button {
+    font-size: 11px;
+    padding: 3px 6px;
+    border: 1px solid #4a90e2;
+    background: #fff;
+    color: #4a90e2;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .preview-item button:hover { background: #4a90e2; color: #fff; }
+
+  .convert-preview {
+    text-align: center;
+    margin: 12px 0;
+  }
+  .convert-preview img {
+    max-width: 200px;
+    max-height: 200px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background:
+      linear-gradient(45deg, #eee 25%, transparent 25%),
+      linear-gradient(-45deg, #eee 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #eee 75%),
+      linear-gradient(-45deg, transparent 75%, #eee 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+  }
+
+  .size-selector {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .size-selector .row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .size-selector label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 80px;
+    cursor: pointer;
+  }
+  .size-selector .custom-input {
+    width: 120px;
+    padding: 4px 6px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 13px;
+  }
+  .size-selector .custom-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .actions {
+    margin-top: 16px;
+    display: flex;
+    gap: 10px;
+  }
+  .actions button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    background: #4a90e2;
+    color: #fff;
+  }
+  .actions button:hover { background: #357abd; }
+  .actions button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+
+  .status {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #666;
+    min-height: 18px;
+  }
+</style>
+</head>
+<body>
+  <h1>ICO 图形化编辑器</h1>
+  <div class="container">
+    <!-- 左侧：ICO 文件解析 -->
+    <div class="panel">
+      <h2>ICO 文件解析</h2>
+      <div class="drop-zone" id="icoDrop">
+        <div>拖拽 ICO 文件到此处，或点击选择</div>
+        <input type="file" id="icoInput" accept=".ico,image/x-icon,image/vnd.microsoft.icon">
+      </div>
+      <div class="preview-list" id="icoPreviewList"></div>
+      <div class="status" id="icoStatus"></div>
+    </div>
+
+    <!-- 右侧：图片转 ICO -->
+    <div class="panel">
+      <h2>图片转 ICO</h2>
+      <div class="drop-zone" id="imgDrop">
+        <div>拖拽 PNG / JPG 文件到此处，或点击选择</div>
+        <input type="file" id="imgInput" accept="image/png,image/jpeg">
+      </div>
+      <div class="convert-preview">
+        <img id="imgPreview" alt="" style="display:none">
+      </div>
+      <div class="size-selector" id="sizeSelector">
+        <div class="row"><strong>图标尺寸：</strong></div>
+        <div class="row"><label><input type="checkbox" class="size-cb" value="16">16x16</label></div>
+        <div class="row"><label><input type="checkbox" class="size-cb" value="24">24x24</label></div>
+        <div class="row"><label><input type="checkbox" class="size-cb" value="32">32x32</label></div>
+        <div class="row"><label><input type="checkbox" class="size-cb" value="48">48x48</label></div>
+        <div class="row"><label><input type="checkbox" class="size-cb" value="64">64x64</label></div>
+        <div class="row"><label><input type="checkbox" class="size-cb" value="72">72x72</label></div>
+        <div class="row"><label><input type="checkbox" class="size-cb" value="80">80x80</label></div>
+        <div class="row"><label><input type="checkbox" class="size-cb" value="96">96x96</label></div>
+        <div class="row"><label><input type="checkbox" class="size-cb" value="128">128x128</label></div>
+        <div class="row"><label><input type="checkbox" class="size-cb" value="256">256x256</label></div>
+        <div class="custom-row">
+          <label><input type="checkbox" id="customCb" value="custom">自定义：</label>
+          <input type="text" class="custom-input" id="customSize" placeholder="[宽度]x[高度]">
+        </div>
+      </div>
+      <div class="actions">
+        <button id="convertBtn" disabled>转为 ICO 并下载</button>
+      </div>
+      <div class="status" id="convertStatus"></div>
+    </div>
+  </div>
+
+<script>
+/* ===================== ICO 解析 ===================== */
+// 解析 ICO 文件，提取每个 entry 的尺寸和 PNG/BMP 数据
+async function parseICO(arrayBuffer) {
+  const view = new DataView(arrayBuffer);
+  // ICONDIR: 6 bytes
+  const reserved = view.getUint16(0, true);
+  const type = view.getUint16(2, true);
+  const count = view.getUint16(4, true);
+  if (reserved !== 0 || type !== 1) {
+    throw new Error("不是有效的 ICO 文件");
+  }
+  const entries = [];
+  for (let i = 0; i < count; i++) {
+    const off = 6 + i * 16;
+    const w = view.getUint8(off) || 256;
+    const h = view.getUint8(off + 1) || 256;
+    const size = view.getUint32(off + 8, true);
+    const dataOff = view.getUint32(off + 12, true);
+    const data = new Uint8Array(arrayBuffer, dataOff, size);
+    entries.push({ width: w, height: h, data });
+  }
+  return entries;
+}
+
+// 将 ICO entry 数据转为可在 <img> 显示的 Blob URL
+function entryToBlobURL(entry) {
+  const data = entry.data;
+  // PNG 直接可用；BMP 需要把 ICO 内嵌 BMP 转为 PNG
+  if (data[0] === 0x89 && data[1] === 0x50) {
+    return URL.createObjectURL(new Blob([data], { type: "image/png" }));
+  }
+  return bmpInIcoToPngURL(entry);
+}
+
+// 将 ICO 中的 DIB（BMP 不带文件头）转为 PNG 数据 URL
+function bmpInIcoToPngURL(entry) {
+  const data = entry.data;
+  const w = entry.width, h = entry.height;
+  // BITMAPINFOHEADER: 40 字节
+  const headerSize = data[0] | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
+  const bpp = data[14] | (data[15] << 8);
+  // 创建 canvas 绘制
+  const canvas = document.createElement("canvas");
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext("2d");
+  const imgData = ctx.createImageData(w, h);
+  const pixels = imgData.data;
+
+  // 调色板（如果有）
+  let palette = null;
+  let paletteColors = 0;
+  if (bpp <= 8) {
+    paletteColors = headerSize === 12 ? 0 : (1 << bpp);
+    palette = [];
+    const palStart = 40;
+    for (let i = 0; i < paletteColors; i++) {
+      const b = data[palStart + i * 4];
+      const g = data[palStart + i * 4 + 1];
+      const r = data[palStart + i * 4 + 2];
+      palette.push([r, g, b, 255]);
+    }
+  }
+
+  const xorStart = headerSize + paletteColors * 4;
+  const andStart = xorStart + (w * h * bpp / 8);
+  const rowBytes = Math.ceil(w * bpp / 32) * 4;
+
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const rowStart = xorStart + (h - 1 - y) * rowBytes;
+      let r = 0, g = 0, b = 0, a = 255;
+      if (bpp === 32) {
+        b = data[rowStart + x * 4];
+        g = data[rowStart + x * 4 + 1];
+        r = data[rowStart + x * 4 + 2];
+        a = data[rowStart + x * 4 + 3];
+      } else if (bpp === 24) {
+        b = data[rowStart + x * 3];
+        g = data[rowStart + x * 3 + 1];
+        r = data[rowStart + x * 3 + 2];
+      } else if (bpp === 8) {
+        const idx = data[rowStart + x];
+        const c = palette[idx];
+        r = c[0]; g = c[1]; b = c[2];
+      } else if (bpp === 4) {
+        const byte = data[rowStart + (x >> 1)];
+        const idx = (x & 1) ? (byte & 0x0F) : (byte >> 4);
+        const c = palette[idx];
+        r = c[0]; g = c[1]; b = c[2];
+      } else if (bpp === 1) {
+        const byte = data[rowStart + (x >> 3)];
+        const idx = (byte >> (7 - (x & 7))) & 1;
+        const c = palette[idx];
+        r = c[0]; g = c[1]; b = c[2];
+      }
+      // AND mask
+      const andRowStart = andStart + (h - 1 - y) * Math.ceil(w / 32) * 4;
+      const andByte = data[andRowStart + (x >> 3)];
+      const andBit = (andByte >> (7 - (x & 7))) & 1;
+      if (andBit) a = 0;
+      const p = (y * w + x) * 4;
+      pixels[p] = r;
+      pixels[p + 1] = g;
+      pixels[p + 2] = b;
+      pixels[p + 3] = a;
+    }
+  }
+  ctx.putImageData(imgData, 0, 0);
+  return canvas.toDataURL("image/png");
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function downloadDataURL(dataURL, filename) {
+  const a = document.createElement("a");
+  a.href = dataURL;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+/* ===================== ICO 解析区域 ===================== */
+const icoDrop = document.getElementById("icoDrop");
+const icoInput = document.getElementById("icoInput");
+const icoPreviewList = document.getElementById("icoPreviewList");
+const icoStatus = document.getElementById("icoStatus");
+
+icoDrop.addEventListener("dragover", e => { e.preventDefault(); icoDrop.classList.add("dragover"); });
+icoDrop.addEventListener("dragleave", () => icoDrop.classList.remove("dragover"));
+icoDrop.addEventListener("drop", e => {
+  e.preventDefault();
+  icoDrop.classList.remove("dragover");
+  const f = e.dataTransfer.files[0];
+  if (f) handleICOFile(f);
+});
+icoDrop.addEventListener("click", () => icoInput.click());
+icoInput.addEventListener("change", e => {
+  const f = e.target.files[0];
+  if (f) handleICOFile(f);
+});
+
+async function handleICOFile(file) {
+  icoPreviewList.innerHTML = "";
+  icoStatus.textContent = "解析中...";
+  try {
+    const buf = await file.arrayBuffer();
+    const entries = await parseICO(buf);
+    icoStatus.textContent = `共 ${entries.length} 个尺寸`;
+    for (const entry of entries) {
+      const isPNG = entry.data[0] === 0x89 && entry.data[1] === 0x50;
+      const blob = new Blob([entry.data], { type: isPNG ? "image/png" : "image/x-icon" });
+      const url = isPNG ? URL.createObjectURL(blob) : bmpInIcoToPngURL(entry);
+
+      const item = document.createElement("div");
+      item.className = "preview-item";
+
+      const img = document.createElement("img");
+      img.src = url;
+      img.width = Math.min(entry.width, 128);
+      img.height = Math.min(entry.height, 128);
+      img.style.width = img.width + "px";
+      img.style.height = img.height + "px";
+
+      const label = document.createElement("div");
+      label.className = "size-label";
+      label.textContent = `${entry.width}x${entry.height}`;
+
+      const btns = document.createElement("div");
+      btns.className = "btns";
+      const btnIco = document.createElement("button");
+      btnIco.textContent = "ICO";
+      btnIco.onclick = () => downloadBlob(blob, `${entry.width}x${entry.height}.ico`);
+      const btnPng = document.createElement("button");
+      btnPng.textContent = "PNG";
+      btnPng.onclick = () => downloadDataURL(url, `${entry.width}x${entry.height}.png`);
+      btns.appendChild(btnIco);
+      btns.appendChild(btnPng);
+
+      item.appendChild(img);
+      item.appendChild(label);
+      item.appendChild(btns);
+      icoPreviewList.appendChild(item);
+    }
+  } catch (err) {
+    icoStatus.textContent = "错误: " + err.message;
+  }
+}
+
+/* ===================== 图片转 ICO ===================== */
+const imgDrop = document.getElementById("imgDrop");
+const imgInput = document.getElementById("imgInput");
+const imgPreview = document.getElementById("imgPreview");
+const convertBtn = document.getElementById("convertBtn");
+const convertStatus = document.getElementById("convertStatus");
+const customCb = document.getElementById("customCb");
+const customSize = document.getElementById("customSize");
+
+let currentImage = null;     // HTMLImageElement
+let currentImageName = "icon";
+
+imgDrop.addEventListener("dragover", e => { e.preventDefault(); imgDrop.classList.add("dragover"); });
+imgDrop.addEventListener("dragleave", () => imgDrop.classList.remove("dragover"));
+imgDrop.addEventListener("drop", e => {
+  e.preventDefault();
+  imgDrop.classList.remove("dragover");
+  const f = e.dataTransfer.files[0];
+  if (f) handleImageFile(f);
+});
+imgDrop.addEventListener("click", () => imgInput.click());
+imgInput.addEventListener("change", e => {
+  const f = e.target.files[0];
+  if (f) handleImageFile(f);
+});
+
+function handleImageFile(file) {
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = new Image();
+    img.onload = () => {
+      currentImage = img;
+      currentImageName = file.name.replace(/\.[^.]+$/, "");
+      imgPreview.src = img.src;
+      imgPreview.style.display = "inline-block";
+      convertStatus.textContent = `已加载: ${file.name} (${img.width}x${img.height})`;
+      convertBtn.disabled = false;
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// 收集勾选的尺寸
+function getSelectedSizes() {
+  const sizes = [];
+  document.querySelectorAll(".size-cb").forEach(cb => {
+    if (cb.checked) sizes.push(parseInt(cb.value));
+  });
+  if (customCb.checked) {
+    const v = customSize.value.trim();
+    const m = v.match(/^(\d+)\s*[xX*]\s*(\d+)$/);
+    if (m) {
+      const w = parseInt(m[1]);
+      const h = parseInt(m[2]);
+      if (w > 0 && h > 0 && w <= 1024 && h <= 1024) sizes.push({ w, h });
+    }
+  }
+  return sizes;
+}
+
+// 将图片绘制到指定尺寸并返回 PNG bytes
+function renderToPngBytes(img, w, h) {
+  const canvas = document.createElement("canvas");
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext("2d");
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
+  ctx.drawImage(img, 0, 0, w, h);
+  // 转为 PNG bytes
+  const dataURL = canvas.toDataURL("image/png");
+  const bin = atob(dataURL.split(",")[1]);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+
+// 构造 ICO 文件（多尺寸或单尺寸）
+function buildIco(img, sizes) {
+  // 统一为对象数组 {w, h, data}
+  const normalized = sizes.map(s => {
+    if (typeof s === "number") return { w: s, h: s };
+    return s;
+  });
+  const pngs = normalized.map(s => ({ ...s, data: renderToPngBytes(img, s.w, s.h) }));
+
+  // ICO header: 6 bytes
+  // 每个 entry: 16 bytes
+  const headerSize = 6 + pngs.length * 16;
+  let dataOffset = headerSize;
+  const entryBuffers = [];
+  for (const p of pngs) {
+    const buf = new ArrayBuffer(16);
+    const v = new DataView(buf);
+    v.setUint8(0, p.w >= 256 ? 0 : p.w);
+    v.setUint8(1, p.h >= 256 ? 0 : p.h);
+    v.setUint8(2, 0); // colors
+    v.setUint8(3, 0); // reserved
+    v.setUint16(4, 1, true); // planes
+    v.setUint16(6, 32, true); // bpp
+    v.setUint32(8, p.data.length, true);
+    v.setUint32(12, dataOffset, true);
+    entryBuffers.push(buf);
+    dataOffset += p.data.length;
+  }
+
+  const totalSize = dataOffset;
+  const out = new Uint8Array(totalSize);
+  const outView = new DataView(out.buffer);
+  outView.setUint16(0, 0, true); // reserved
+  outView.setUint16(2, 1, true); // type: ICO
+  outView.setUint16(4, pngs.length, true); // count
+
+  let offset = 6;
+  for (const buf of entryBuffers) {
+    out.set(new Uint8Array(buf), offset);
+    offset += 16;
+  }
+  for (const p of pngs) {
+    out.set(p.data, offset);
+    offset += p.data.length;
+  }
+  return out;
+}
+
+convertBtn.addEventListener("click", () => {
+  if (!currentImage) return;
+  const sizes = getSelectedSizes();
+  if (sizes.length === 0) {
+    convertStatus.textContent = "请至少选择一个尺寸";
+    return;
+  }
+  const icoData = buildIco(currentImage, sizes);
+  const blob = new Blob([icoData], { type: "image/x-icon" });
+  const name = sizes.length === 1
+    ? `${currentImageName}_${typeof sizes[0] === "number" ? sizes[0] + "x" + sizes[0] : sizes[0].w + "x" + sizes[0].h}.ico`
+    : `${currentImageName}_multi.ico`;
+  downloadBlob(blob, name);
+  convertStatus.textContent = `已生成: ${name}（含 ${sizes.length} 个尺寸）`;
+});
+</script>
+</body>
+</html>

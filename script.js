@@ -8,7 +8,7 @@ const projects = [
     { name: "赛车摩擦圆模拟🏎️", url: "main/赛车摩擦圆模拟/赛车摩擦圆模拟.html" },
     { name: "汉诺塔演示", url: "main/汉诺塔演示器/汉诺塔演示器.html" },
     { name: "⭐我的SolidWorks建模作品⭐", url: "main/SW/SW首页.html" },
-    { name: "ICO图标尺寸查看器", url: "main/小工具/ico尺寸查看器/ico尺寸查看器.html" },
+    { name: "ICO编辑器", url: "main/小工具/ICO编辑器/ICO编辑器.html" },
     { name: "康威生命游戏", url: "main/康威生命游戏/康威生命游戏.html" },
     // { name: "……建设中", url: "#" },
     // { name: "……建设中", url: "#" },
