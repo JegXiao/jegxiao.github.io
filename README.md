@@ -71,7 +71,7 @@ openflow/
 | ❓ 何意味 | 一个语义探索的小工具 | [访问](https://jegxiao.github.io/main/何意味/何意味.html) |
 | ⭐ SolidWorks 建模作品 | 个人 SW 建模作品展示（含下载） | [访问](https://jegxiao.github.io/main/SW/SW首页.html) |
 | 🧬 康威生命游戏 | 经典细胞自动机模拟器 | [访问](https://jegxiao.github.io/main/康威生命游戏/康威.html) |
-| 🔧 ICO 图标尺寸查看器 | 上传 ICO 文件查看内部尺寸 | [访问](https://jegxiao.github.io/main/开发辅助/ico尺寸查看器/ico尺寸查看器.html) |
+| 🔧 ICO 图标尺寸查看器 | 上传 ICO 查看内部尺寸 / PNG/JPG 转 ICO | [访问](https://jegxiao.github.io/main/小工具/ico尺寸查看器/ico尺寸查看器.html) |
 
 ---
 
@@ -99,7 +99,7 @@ jegxiao.github.io/
 │   ├── F1反应测试/
 │   ├── SW/                     ← SolidWorks 建模展示
 │   ├── 何意味/
-│   ├── 开发辅助/ico尺寸查看器/
+│   ├── 小工具/ico尺寸查看器/
 │   ├── 康威生命游戏/
 │   ├── 我要验牌/
 │   ├── 汉诺塔演示器/
