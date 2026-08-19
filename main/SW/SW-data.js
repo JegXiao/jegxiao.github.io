@@ -17,8 +17,11 @@ const categories = [
                     "SWmodels/地区钥匙扣系列/大雁塔钥匙扣/0.png",
                     "SWmodels/地区钥匙扣系列/大雁塔钥匙扣/1.png",
                     "SWmodels/地区钥匙扣系列/大雁塔钥匙扣/2.png",
-                    "SWmodels/地区钥匙扣系列/大雁塔钥匙扣/3.png"
-
+                    "SWmodels/地区钥匙扣系列/大雁塔钥匙扣/3.png",
+                    "SWmodels/地区钥匙扣系列/大雁塔钥匙扣/4.png",
+                    "SWmodels/地区钥匙扣系列/大雁塔钥匙扣/5.png",
+                    "SWmodels/地区钥匙扣系列/大雁塔钥匙扣/6.png",
+                    "SWmodels/地区钥匙扣系列/大雁塔钥匙扣/7.png"
                 ],
                 downloads: [
                     { name: "大雁塔钥匙扣.STEP", url: "SWmodels/地区钥匙扣系列/大雁塔钥匙扣/大雁塔钥匙扣.STEP" },
@@ -32,7 +35,14 @@ const categories = [
                 description: "",
                 cover: "SWmodels/地区钥匙扣系列/山东聊城钥匙扣/0.png",
                 images: [
-                    "SWmodels/地区钥匙扣系列/山东聊城钥匙扣/0.png"
+                    "SWmodels/地区钥匙扣系列/山东聊城钥匙扣/0.png",
+                    "SWmodels/地区钥匙扣系列/山东聊城钥匙扣/1.png",
+                    "SWmodels/地区钥匙扣系列/山东聊城钥匙扣/2.png",
+                    "SWmodels/地区钥匙扣系列/山东聊城钥匙扣/3.png",
+                    "SWmodels/地区钥匙扣系列/山东聊城钥匙扣/4.png",
+                    "SWmodels/地区钥匙扣系列/山东聊城钥匙扣/5.png",
+                    "SWmodels/地区钥匙扣系列/山东聊城钥匙扣/6.png",
+                    "SWmodels/地区钥匙扣系列/山东聊城钥匙扣/7.png"
                 ],
                 downloads: [
                     { name: "山东聊城钥匙扣.STEP", url: "SWmodels/地区钥匙扣系列/山东聊城钥匙扣/山东聊城钥匙扣.STEP" },
@@ -46,7 +56,14 @@ const categories = [
                 description: "",
                 cover: "SWmodels/地区钥匙扣系列/西安钥匙扣/0.png",
                 images: [
-                    "SWmodels/地区钥匙扣系列/西安钥匙扣/0.png"
+                    "SWmodels/地区钥匙扣系列/西安钥匙扣/0.png",
+                    "SWmodels/地区钥匙扣系列/西安钥匙扣/1.png",
+                    "SWmodels/地区钥匙扣系列/西安钥匙扣/2.png",
+                    "SWmodels/地区钥匙扣系列/西安钥匙扣/3.png",
+                    "SWmodels/地区钥匙扣系列/西安钥匙扣/4.png",
+                    "SWmodels/地区钥匙扣系列/西安钥匙扣/5.png",
+                    "SWmodels/地区钥匙扣系列/西安钥匙扣/6.png",
+                    "SWmodels/地区钥匙扣系列/西安钥匙扣/7.png"
                 ],
                 downloads: [
                     { name: "西安钥匙扣.STEP", url: "SWmodels/地区钥匙扣系列/西安钥匙扣/西安钥匙扣.STEP" },
@@ -60,7 +77,14 @@ const categories = [
                 description: "",
                 cover: "SWmodels/地区钥匙扣系列/吉林四平钥匙扣/0.png",
                 images: [
-                    "SWmodels/地区钥匙扣系列/吉林四平钥匙扣/0.png"
+                    "SWmodels/地区钥匙扣系列/吉林四平钥匙扣/0.png",
+                    "SWmodels/地区钥匙扣系列/吉林四平钥匙扣/1.png",
+                    "SWmodels/地区钥匙扣系列/吉林四平钥匙扣/2.png",
+                    "SWmodels/地区钥匙扣系列/吉林四平钥匙扣/3.png",
+                    "SWmodels/地区钥匙扣系列/吉林四平钥匙扣/4.png",
+                    "SWmodels/地区钥匙扣系列/吉林四平钥匙扣/5.png",
+                    "SWmodels/地区钥匙扣系列/吉林四平钥匙扣/6.png",
+                    "SWmodels/地区钥匙扣系列/吉林四平钥匙扣/7.png"
                 ],
                 downloads: [
                     { name: "吉林四平钥匙扣.STEP", url: "SWmodels/地区钥匙扣系列/吉林四平钥匙扣/吉林四平钥匙扣.STEP" },
@@ -74,7 +98,14 @@ const categories = [
                 description: "",
                 cover: "SWmodels/地区钥匙扣系列/湖北黄石钥匙扣/0.png",
                 images: [
-                    "SWmodels/地区钥匙扣系列/湖北黄石钥匙扣/0.png"
+                    "SWmodels/地区钥匙扣系列/湖北黄石钥匙扣/0.png",
+                    "SWmodels/地区钥匙扣系列/湖北黄石钥匙扣/1.png",
+                    "SWmodels/地区钥匙扣系列/湖北黄石钥匙扣/2.png",
+                    "SWmodels/地区钥匙扣系列/湖北黄石钥匙扣/3.png",
+                    "SWmodels/地区钥匙扣系列/湖北黄石钥匙扣/4.png",
+                    "SWmodels/地区钥匙扣系列/湖北黄石钥匙扣/5.png",
+                    "SWmodels/地区钥匙扣系列/湖北黄石钥匙扣/6.png",
+                    "SWmodels/地区钥匙扣系列/湖北黄石钥匙扣/7.png"
                 ],
                 downloads: [
                     { name: "湖北黄石钥匙扣.STEP", url: "SWmodels/地区钥匙扣系列/湖北黄石钥匙扣/湖北黄石钥匙扣.STEP" },
@@ -88,7 +119,14 @@ const categories = [
                 description: "",
                 cover: "SWmodels/地区钥匙扣系列/贵州铜仁钥匙扣/0.png",
                 images: [
-                    "SWmodels/地区钥匙扣系列/贵州铜仁钥匙扣/0.png"
+                    "SWmodels/地区钥匙扣系列/贵州铜仁钥匙扣/0.png",
+                    "SWmodels/地区钥匙扣系列/贵州铜仁钥匙扣/1.png",
+                    "SWmodels/地区钥匙扣系列/贵州铜仁钥匙扣/2.png",
+                    "SWmodels/地区钥匙扣系列/贵州铜仁钥匙扣/3.png",
+                    "SWmodels/地区钥匙扣系列/贵州铜仁钥匙扣/4.png",
+                    "SWmodels/地区钥匙扣系列/贵州铜仁钥匙扣/5.png",
+                    "SWmodels/地区钥匙扣系列/贵州铜仁钥匙扣/6.png",
+                    "SWmodels/地区钥匙扣系列/贵州铜仁钥匙扣/7.png"
                 ],
                 downloads: [
                     { name: "贵州铜仁钥匙扣.STEP", url: "SWmodels/地区钥匙扣系列/贵州铜仁钥匙扣/贵州铜仁钥匙扣.STEP" },
@@ -102,7 +140,14 @@ const categories = [
                 description: "",
                 cover: "SWmodels/地区钥匙扣系列/贵州铜仁沿河白塔钥匙扣/0.png",
                 images: [
-                    "SWmodels/地区钥匙扣系列/贵州铜仁沿河白塔钥匙扣/0.png"
+                    "SWmodels/地区钥匙扣系列/贵州铜仁沿河白塔钥匙扣/0.png",
+                    "SWmodels/地区钥匙扣系列/贵州铜仁沿河白塔钥匙扣/1.png",
+                    "SWmodels/地区钥匙扣系列/贵州铜仁沿河白塔钥匙扣/2.png",
+                    "SWmodels/地区钥匙扣系列/贵州铜仁沿河白塔钥匙扣/3.png",
+                    "SWmodels/地区钥匙扣系列/贵州铜仁沿河白塔钥匙扣/4.png",
+                    "SWmodels/地区钥匙扣系列/贵州铜仁沿河白塔钥匙扣/5.png",
+                    "SWmodels/地区钥匙扣系列/贵州铜仁沿河白塔钥匙扣/6.png",
+                    "SWmodels/地区钥匙扣系列/贵州铜仁沿河白塔钥匙扣/7.png"
                 ],
                 downloads: [
                     { name: "贵州铜仁沿河白塔钥匙扣.STEP", url: "SWmodels/地区钥匙扣系列/贵州铜仁沿河白塔钥匙扣/贵州铜仁沿河白塔钥匙扣.STEP" },
@@ -122,7 +167,14 @@ const categories = [
                 description: "",
                 cover: "SWmodels/其他模型/五月的风/0.png",
                 images: [
-                    "SWmodels/其他模型/五月的风/0.png"
+                    "SWmodels/其他模型/五月的风/0.png",
+                    "SWmodels/其他模型/五月的风/1.png",
+                    "SWmodels/其他模型/五月的风/2.png",
+                    "SWmodels/其他模型/五月的风/3.png",
+                    "SWmodels/其他模型/五月的风/4.png",
+                    "SWmodels/其他模型/五月的风/5.png",
+                    "SWmodels/其他模型/五月的风/6.png",
+                    "SWmodels/其他模型/五月的风/7.png"
                 ],
                 downloads: [
                     { name: "五月的风.STEP", url: "SWmodels/其他模型/五月的风/五月的风.STEP" },
@@ -136,7 +188,14 @@ const categories = [
                 description: "",
                 cover: "SWmodels/其他模型/圣诞树/0.png",
                 images: [
-                    "SWmodels/其他模型/圣诞树/0.png"
+                    "SWmodels/其他模型/圣诞树/0.png",
+                    "SWmodels/其他模型/圣诞树/1.png",
+                    "SWmodels/其他模型/圣诞树/2.png",
+                    "SWmodels/其他模型/圣诞树/3.png",
+                    "SWmodels/其他模型/圣诞树/4.png",
+                    "SWmodels/其他模型/圣诞树/5.png",
+                    "SWmodels/其他模型/圣诞树/6.png",
+                    "SWmodels/其他模型/圣诞树/7.png"
                 ],
                 downloads: [
                     { name: "圣诞树.STEP", url: "SWmodels/其他模型/圣诞树/圣诞树.STEP" },
@@ -150,7 +209,14 @@ const categories = [
                 description: "",
                 cover: "SWmodels/其他模型/安卓机器人/0.png",
                 images: [
-                    "SWmodels/其他模型/安卓机器人/0.png"
+                    "SWmodels/其他模型/安卓机器人/0.png",
+                    "SWmodels/其他模型/安卓机器人/1.png",
+                    "SWmodels/其他模型/安卓机器人/2.png",
+                    "SWmodels/其他模型/安卓机器人/3.png",
+                    "SWmodels/其他模型/安卓机器人/4.png",
+                    "SWmodels/其他模型/安卓机器人/5.png",
+                    "SWmodels/其他模型/安卓机器人/6.png",
+                    "SWmodels/其他模型/安卓机器人/7.png"
                 ],
                 downloads: [
                     { name: "安卓机器人.STEP", url: "SWmodels/其他模型/安卓机器人/安卓机器人.STEP" },
@@ -169,7 +235,14 @@ const categories = [
                 description: "",
                 cover: "SWmodels/其他模型/木哨-工程实践/0.png",
                 images: [
-                    "SWmodels/其他模型/木哨-工程实践/0.png"
+                    "SWmodels/其他模型/木哨-工程实践/0.png",
+                    "SWmodels/其他模型/木哨-工程实践/1.png",
+                    "SWmodels/其他模型/木哨-工程实践/2.png",
+                    "SWmodels/其他模型/木哨-工程实践/3.png",
+                    "SWmodels/其他模型/木哨-工程实践/4.png",
+                    "SWmodels/其他模型/木哨-工程实践/5.png",
+                    "SWmodels/其他模型/木哨-工程实践/6.png",
+                    "SWmodels/其他模型/木哨-工程实践/7.png"
                 ],
                 downloads: [
                     { name: "木哨-工程实践.STEP", url: "SWmodels/其他模型/木哨-工程实践/木哨-工程实践.STEP" },
@@ -183,7 +256,14 @@ const categories = [
                 description: "",
                 cover: "SWmodels/其他模型/橄榄球/0.png",
                 images: [
-                    "SWmodels/其他模型/橄榄球/0.png"
+                    "SWmodels/其他模型/橄榄球/0.png",
+                    "SWmodels/其他模型/橄榄球/1.png",
+                    "SWmodels/其他模型/橄榄球/2.png",
+                    "SWmodels/其他模型/橄榄球/3.png",
+                    "SWmodels/其他模型/橄榄球/4.png",
+                    "SWmodels/其他模型/橄榄球/5.png",
+                    "SWmodels/其他模型/橄榄球/6.png",
+                    "SWmodels/其他模型/橄榄球/7.png"
                 ],
                 downloads: [
                     { name: "橄榄球.STEP", url: "SWmodels/其他模型/橄榄球/橄榄球.STEP" },
@@ -197,7 +277,14 @@ const categories = [
                 description: "",
                 cover: "SWmodels/其他模型/橄榄球-新/0.png",
                 images: [
-                    "SWmodels/其他模型/橄榄球-新/0.png"
+                    "SWmodels/其他模型/橄榄球-新/0.png",
+                    "SWmodels/其他模型/橄榄球-新/1.png",
+                    "SWmodels/其他模型/橄榄球-新/2.png",
+                    "SWmodels/其他模型/橄榄球-新/3.png",
+                    "SWmodels/其他模型/橄榄球-新/4.png",
+                    "SWmodels/其他模型/橄榄球-新/5.png",
+                    "SWmodels/其他模型/橄榄球-新/6.png",
+                    "SWmodels/其他模型/橄榄球-新/7.png"
                 ],
                 downloads: [
                     { name: "橄榄球-新.STEP", url: "SWmodels/其他模型/橄榄球-新/橄榄球-新.STEP" },
@@ -211,7 +298,14 @@ const categories = [
                 description: "",
                 cover: "SWmodels/其他模型/镊子/0.png",
                 images: [
-                    "SWmodels/其他模型/镊子/0.png"
+                    "SWmodels/其他模型/镊子/0.png",
+                    "SWmodels/其他模型/镊子/1.png",
+                    "SWmodels/其他模型/镊子/2.png",
+                    "SWmodels/其他模型/镊子/3.png",
+                    "SWmodels/其他模型/镊子/4.png",
+                    "SWmodels/其他模型/镊子/5.png",
+                    "SWmodels/其他模型/镊子/6.png",
+                    "SWmodels/其他模型/镊子/7.png"
                 ],
                 downloads: [
                     { name: "镊子.STEP", url: "SWmodels/其他模型/镊子/镊子.STEP" },
@@ -225,7 +319,14 @@ const categories = [
                 description: "",
                 cover: "SWmodels/其他模型/鲁班锁/0.png",
                 images: [
-                    "SWmodels/其他模型/鲁班锁/0.png"
+                    "SWmodels/其他模型/鲁班锁/0.png",
+                    "SWmodels/其他模型/鲁班锁/1.png",
+                    "SWmodels/其他模型/鲁班锁/2.png",
+                    "SWmodels/其他模型/鲁班锁/3.png",
+                    "SWmodels/其他模型/鲁班锁/4.png",
+                    "SWmodels/其他模型/鲁班锁/5.png",
+                    "SWmodels/其他模型/鲁班锁/6.png",
+                    "SWmodels/其他模型/鲁班锁/7.png"
                 ],
                 downloads: [
                     { name: "鲁班锁.STEP", url: "SWmodels/其他模型/鲁班锁/鲁班锁.STEP" },
