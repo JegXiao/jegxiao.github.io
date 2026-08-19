@@ -64,13 +64,13 @@ openflow/
 |------|------|------|
 | ★ **OpenFlow 开放流动** | 三语静态站点，带主题切换 | [访问](https://jegxiao.github.io/openflow) |
 | 🎹 键盘钢琴 | 用键盘弹奏的网页钢琴 | [访问](https://jegxiao.github.io/main/钢琴/钢琴.html) |
-| 🃏 我要验牌 | 《赌神》风格的扑克牌验牌程序 | [访问](https://jegxiao.github.io/main/我要验牌/index.html) |
+| 🃏 我要验牌 | 《赌神》风格的扑克牌验牌程序 | [访问](https://jegxiao.github.io/main/我要验牌/验牌.html) |
 | 🏎️ F1 起跑反应测试 | 测量你的 F1 起跑反应速度 | [访问](https://jegxiao.github.io/main/F1反应测试/f1_reaction_test.html) |
-| 🏎️ 赛车摩擦圆模拟 | 可视化赛车轮胎摩擦圆极限 | [访问](https://jegxiao.github.io/main/赛车摩擦圆模拟/index.html) |
+| 🏎️ 赛车摩擦圆模拟 | 可视化赛车轮胎摩擦圆极限 | [访问](https://jegxiao.github.io/main/赛车摩擦圆模拟/摩擦圆.html) |
 | 🗼 汉诺塔演示 | 经典递归算法的动画演示 | [访问](https://jegxiao.github.io/main/汉诺塔演示器/汉诺塔演示器.html) |
 | ❓ 何意味 | 一个语义探索的小工具 | [访问](https://jegxiao.github.io/main/何意味/何意味.html) |
-| ⭐ SolidWorks 建模作品 | 个人 SW 建模作品展示（含下载） | [访问](https://jegxiao.github.io/main/SW/首页.html) |
-| 🧬 康威生命游戏 | 经典细胞自动机模拟器 | [访问](https://jegxiao.github.io/main/康威生命游戏/index.html) |
+| ⭐ SolidWorks 建模作品 | 个人 SW 建模作品展示（含下载） | [访问](https://jegxiao.github.io/main/SW/SW首页.html) |
+| 🧬 康威生命游戏 | 经典细胞自动机模拟器 | [访问](https://jegxiao.github.io/main/康威生命游戏/康威.html) |
 | 🔧 ICO 图标尺寸查看器 | 上传 ICO 文件查看内部尺寸 | [访问](https://jegxiao.github.io/main/开发辅助/ico尺寸查看器/ico尺寸查看器.html) |
 
 ---
