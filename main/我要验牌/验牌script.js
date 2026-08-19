@@ -40,7 +40,7 @@ audioFiles.forEach((fileName, index) => {
     btn.id = `btn-${btnId}`;
     grid.appendChild(btn);
 
-    const audio = new Audio(`audio/${fileName}`);
+    const audio = new Audio(`验牌声音/${fileName}`);
     audio.preload = "auto";
     audioObjects[btnId] = audio;
 

@@ -11,9 +11,9 @@ const categories = [
                 name: "大雁塔",
                 brief: "让思绪回到十三朝古都",
                 description: "这里是完整的详细描述。你可以在这里写任意长度的介绍，包括设计思路、工艺特点、使用场景等。\n支持换行。",
-                cover: "SWmodels/钥匙扣/大雁塔/0.png",
+                cover: "SWmodels/钥匙扣/大雁塔/1.png",
                 images: [
-                    "SWmodels/钥匙扣/大雁塔/0.png",
+                    "SWmodels/钥匙扣/大雁塔/1.png",
                     "SWmodels/钥匙扣/pic1.jpg",
                     "SWmodels/钥匙扣/pic2.jpg"
                 ],
@@ -39,7 +39,7 @@ const categories = [
     },
 
     {
-        name: "示例分类",
+        name: "分类二",
         models: [
             {
                 id: "demo-001",
