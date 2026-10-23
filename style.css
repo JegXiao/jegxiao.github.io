@@ -8,7 +8,7 @@ body {
         radial-gradient(1200px 600px at 85% -10%, rgba(255, 138, 101, 0.18), transparent 60%),
         radial-gradient(900px 500px at 5% 10%, rgba(138, 200, 255, 0.20), transparent 60%),
         radial-gradient(900px 500px at 50% 110%, rgba(186, 153, 255, 0.14), transparent 60%),
-        #f7f5fb;
+        #adc7ff;
     color: #1a2233;
     min-height: 100vh;
     display: flex;
@@ -31,7 +31,7 @@ header {
     font-size: 2.6rem;
     font-weight: 800;
     letter-spacing: -1px;
-    background: linear-gradient(135deg, #1a7a9e 0%, #6f4ad8 50%, #ff6b9d 100%);
+    background: linear-gradient(135deg, #002dff 0%, #649aff 50%, #37971f 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -46,7 +46,7 @@ header {
 }
 
 .site-subtitle {
-    color: #6b7785;
+    color: #9500ff;
     font-size: 1rem;
     margin-bottom: 36px;
 }
@@ -65,10 +65,10 @@ header {
     background:
         radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.20), transparent 40%),
         radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.10), transparent 50%),
-        linear-gradient(135deg, #ff6b9d 0%, #c44ad8 50%, #6f4ad8 100%);
+        linear-gradient(135deg, #006df8 0%, #b3cdff 50%, #5ab3ff 100%);
     color: #fff;
     text-decoration: none;
-    box-shadow: 0 20px 50px -10px rgba(196, 74, 216, 0.5),
+    box-shadow: 0 20px 50px -10px rgb(108 177 255 / 0.5),
                 0 4px 12px rgba(0, 0, 0, 0.06);
     position: relative;
     overflow: hidden;
@@ -93,7 +93,7 @@ header {
 
 .feature:hover {
     transform: translateY(-6px) scale(1.01);
-    box-shadow: 0 30px 60px -10px rgba(196, 74, 216, 0.65),
+    box-shadow: 0 30px 60px -10px rgb(7 134 255 / 0.65),
                 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 

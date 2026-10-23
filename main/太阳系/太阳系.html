@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Earth Pole Telescope · 北极望远镜</title>
+<style>
+  html, body { margin: 0; padding: 0; overflow: hidden; background: #000; height: 100%; }
+  #app { position: fixed; inset: 0; }
+  #crosshair {
+    position: fixed; left: 50%; top: 50%; width: 14px; height: 14px;
+    transform: translate(-50%, -50%); pointer-events: none; opacity: .55; z-index: 5;
+  }
+  #crosshair::before, #crosshair::after { content: ''; position: absolute; background: #fff; }
+  #crosshair::before { left: 6px; top: 0; width: 2px; height: 14px; }
+  #crosshair::after { left: 0; top: 6px; width: 14px; height: 2px; }
+  #hud {
+    position: fixed; right: 14px; bottom: 10px; text-align: right;
+    color: rgba(160,190,230,.65); font: 12px/1.6 monospace; pointer-events: none; white-space: pre;
+  }
+  #hud b { color: #cfe3ff; font-weight: normal; }
+  #tags { position: fixed; inset: 0; pointer-events: none; z-index: 4; overflow: hidden; }
+  #tags .tag {
+    position: absolute; color: rgba(200,220,250,.8); font: 12px "Microsoft YaHei", sans-serif;
+    white-space: nowrap; text-shadow: 0 0 4px #000; will-change: transform;
+  }
+  #tags .arr {
+    position: absolute; width: 36px; height: 12px; opacity: .55;
+    transform-origin: 0 50%; will-change: transform; /* 原点=箭头尖端，精确钉在天体中心 */
+    filter: drop-shadow(0 0 3px rgba(0,0,0,.9));
+  }
+  #hint {
+    position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: #cfe3ff; background: rgba(0,0,0,.35); font-size: 16px; cursor: pointer;
+    z-index: 10; user-select: none; text-align: center; line-height: 2;
+  }
+  #loader { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; color: #9fb6d4; z-index: 20; background: #000; font-size: 14px; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="tags"></div>
+<div id="crosshair"></div>
+<div id="hud"></div>
+<div id="hint">点击进入望远镜视角（ESC 退出）<br/><span style="font-size:12px;color:#8aa3c4">移动鼠标 — 转动视线（无上下限） · 滚轮 — 变焦（最大 3000x，越放大越精细） · TAB — 显示/隐藏标签</span></div>
+<div id="loader">正在加载天体贴图，请稍候…</div>
+
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+// 本地高清贴图（2K，来自 Solar System Scope / threex.planets）
+const TEX = 'textures/';
+
+// —— 真实太阳系比例：1 单位 = 1000 km ——
+// 天体摆放（黄道面 y=0，全部位于太阳同侧）：
+//   相对于太阳的方位角 az 从内到外递增，水星 = 0°（此为摆放坐标，与摄像机方位角不同）
+//   行星位于其轨道上；卫星也摆在行星轨道上，沿轨道方向与行星的真实距离处（mdist = 距行星距离）
+//   dist: 距太阳（km/1000）；r: 真实半径；mdist: 距母行星距离（km/1000）
+const AU = 149600;
+const BODIES = [
+  { name: '太阳',   tex: 'sunmap.jpg',     az: null, dist: 0,          r: 696 },
+  { name: '水星',   tex: 'mercurymap.jpg', az: 0,    dist: 0.387 * AU, r: 2.44 },
+  { name: '金星',   tex: 'venusmap.jpg',   az: 8,    dist: 0.723 * AU, r: 6.05 },
+  { name: '地球',   tex: 'earthmap1k.jpg', az: 16,   dist: 1.000 * AU, r: 6.4 },
+  { name: '月球',   tex: 'moonmap1k.jpg',  parent: '地球',   mdist: 384.4,  r: 1.737 },
+  { name: '火星',   tex: 'marsmap.jpg',    az: 24,   dist: 1.524 * AU, r: 3.39 },
+  { name: '火卫一', tex: 'phobos.png',     parent: '火星',   mdist: 9.376,  r: 0.011 },
+  { name: '火卫二', tex: 'deimos.jpg',     parent: '火星',   mdist: 23.46,  r: 0.006 },
+  { name: '木星',   tex: 'jupitermap.jpg', az: 32,   dist: 5.203 * AU, r: 69.9 },
+  { name: '木卫一', tex: 'io.jpg',         parent: '木星',   mdist: 421.7,  r: 1.821 },
+  { name: '木卫二', tex: 'europa.jpg',     parent: '木星',   mdist: 671.1,  r: 1.561 },
+  { name: '木卫三', tex: 'ganymede.jpg',   parent: '木星',   mdist: 1070.4, r: 2.634 },
+  { name: '木卫四', tex: 'callisto.jpg',   parent: '木星',   mdist: 1882.7, r: 2.410 },
+  { name: '土星',   tex: 'saturnmap.jpg',  az: 40,   dist: 9.583 * AU, r: 58.2 },
+  { name: '土卫六', tex: 'titan.png',      parent: '土星',   mdist: 1221.9, r: 2.575 },
+  { name: '天王星', tex: 'uranusmap.jpg',  az: 48,   dist: 19.20 * AU, r: 25.36 },
+  { name: '天卫三', tex: 'titania.jpg',    parent: '天王星', mdist: 435.9,  r: 0.789 },
+  { name: '海王星', tex: 'neptunemap.jpg', az: 56,   dist: 30.08 * AU, r: 24.62 },
+  { name: '海卫一', tex: 'triton.jpg',     parent: '海王星', mdist: 354.8,  r: 1.353 },
+  { name: '冥王星', tex: 'plutomap1k.jpg', az: 64,   dist: 39.48 * AU, r: 1.19 },
+];
+const DEG = Math.PI / 180;
+const byName = Object.fromEntries(BODIES.map(b => [b.name, b]));
+
+// 摆放坐标 → 世界坐标（黄道面上）：方位角绕 Y 轴，0° = +X
+// 卫星：与母行星同轨（dist 相同），方位角沿轨道外移 mdist 对应的弧长（Δaz = mdist / dist 弧度）
+const worldPos = b => {
+  if (b.az === null) return new THREE.Vector3(0, 0, 0);
+  const az = b.az * DEG;
+  return new THREE.Vector3(Math.cos(az) * b.dist, 0, Math.sin(az) * b.dist);
+};
+const worldPosResolved = b => {
+  if (!b.parent) return worldPos(b);
+  const p = byName[b.parent];
+  const az = (p.az + (b.mdist / p.dist) / DEG) * DEG; // 真实弧长 → 方位角偏移
+  return new THREE.Vector3(Math.cos(az) * p.dist, 0, Math.sin(az) * p.dist);
+};
+
+const app = document.getElementById('app');
+const scene = new THREE.Scene();
+
+// 真实比例下距离跨越数百万单位，用对数深度缓冲避免 z 冲突
+const renderer = new THREE.WebGLRenderer({ antialias: true, logarithmicDepthBuffer: true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+app.appendChild(renderer.domElement);
+
+// 相机：地球北极上空 1000 km（地球半径 6400 km → 6.4 单位）
+const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.001, 1e8);
+const earth = BODIES.find(b => b.name === '地球');
+const camPos = worldPos(earth).clone().add(new THREE.Vector3(0, earth.r + 1.0, 0));
+camera.position.copy(camPos);
+
+// 初始视线：直视太阳
+camera.lookAt(0, 0, 0);
+const eul = new THREE.Euler(0, 0, 0, 'YXZ');
+eul.setFromQuaternion(camera.quaternion, 'YXZ');
+
+// —— 方位角体系（相对摄像机）——
+// 以「摄像机 → 太阳」的水平方向为方位角 0°（绕 Y 轴，向 +Z 侧偏转为正）
+const refXZ = (() => {
+  const d = new THREE.Vector3(-camPos.x, 0, -camPos.z).normalize(); // 指向太阳
+  return d;
+})();
+function azimuthOf(dir) { // dir: 任意方向向量，返回相对太阳方向的方位角（度）
+  const dx = dir.x, dz = dir.z;
+  const dot = refXZ.x * dx + refXZ.z * dz;
+  const crossY = refXZ.z * dx - refXZ.x * dz; // 叉积 Y 分量决定正负
+  return Math.atan2(crossY, dot) / DEG;
+}
+const bodyAz = BODIES.map(b => {
+  const dir = worldPosResolved(b).sub(camPos);
+  return { name: b.name, az: azimuthOf(dir) };
+});
+
+// —— 指针锁定（Minecraft 式）——
+const hint = document.getElementById('hint');
+function lockPointer() { renderer.domElement.requestPointerLock(); }
+hint.addEventListener('click', lockPointer);
+renderer.domElement.addEventListener('click', () => { if (document.pointerLockElement !== renderer.domElement) lockPointer(); });
+document.addEventListener('pointerlockchange', () => {
+  hint.style.display = (document.pointerLockElement === renderer.domElement) ? 'none' : 'flex';
+});
+document.addEventListener('mousemove', e => {
+  if (document.pointerLockElement !== renderer.domElement) return;
+  // 灵敏度随 FOV 缩放：放大越多，鼠标越精细
+  const sens = 0.0022 * (fov / 60);
+  eul.y -= e.movementX * sens;
+  eul.x -= e.movementY * sens; // 无限上下视角
+});
+
+// —— 超级望远镜变焦：FOV 0.005°（12000x）~ 70°（避免广角畸变）——
+let fov = 60;
+addEventListener('wheel', e => {
+  e.preventDefault();
+  fov = THREE.MathUtils.clamp(fov * (e.deltaY > 0 ? 1.15 : 1 / 1.15), 0.005, 70);
+}, { passive: false });
+
+const fallbackColor = { '太阳': '#ffcc55', '水星': '#b5a898', '金星': '#e8c77e', '地球': '#5f8fce', '月球': '#c8c8c8', '火星': '#d1684a', '火卫一': '#a89a8c', '火卫二': '#b0a498', '木星': '#d8b48a', '木卫一': '#e8d06a', '木卫二': '#d8cfc0', '木卫三': '#b09a80', '木卫四': '#8a7a68', '土星': '#e3d5a8', '土卫六': '#d8a860', '天王星': '#9fe3e8', '天卫三': '#b8c4cc', '海王星': '#5a7de0', '海卫一': '#d8c8c0', '冥王星': '#c9a888' };
+function fallbackTexture(name) {
+  const c = document.createElement('canvas'); c.width = c.height = 256;
+  const ctx = c.getContext('2d');
+  const g = ctx.createLinearGradient(0, 0, 0, 256);
+  g.addColorStop(0, fallbackColor[name] || '#aaa'); g.addColorStop(1, '#222');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, 256, 256);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+
+const loader = new THREE.TextureLoader();
+loader.setCrossOrigin('anonymous');
+let pending = BODIES.length;
+
+BODIES.forEach(b => {
+  const add = tex => {
+    const mesh = new THREE.Mesh(
+      new THREE.SphereGeometry(b.r, 64, 48),
+      new THREE.MeshBasicMaterial({ map: tex }) // 无光照材质，纯贴图
+    );
+    mesh.position.copy(worldPosResolved(b));
+    scene.add(mesh);
+    if (--pending === 0) document.getElementById('loader').style.display = 'none';
+  };
+
+  let done = false;
+  loader.load(TEX + b.tex, tex => {
+    if (done) return; done = true;
+    tex.colorSpace = THREE.SRGBColorSpace;
+    add(tex);
+  }, undefined, () => { if (!done) { done = true; add(fallbackTexture(b.name)); } });
+});
+
+// —— 右下角 HUD：视线方位/俯仰 + 各天体方位（均相对摄像机，直视太阳 = 方位 0°）——
+const hud = document.getElementById('hud');
+const fmt = a => (a >= 0 ? '+' : '') + a.toFixed(1) + '°';
+const FORWARD = new THREE.Vector3();
+const tmpQ = new THREE.Quaternion();
+let hudTimer = 0;
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+// —— 天体标签：文字+箭头，箭头旋转跟踪指向天体中心；固定像素大小，不随缩放变化 ——
+const tagsRoot = document.getElementById('tags');
+const tags = BODIES.map(b => {
+  const el = document.createElement('div');   // 文字
+  el.className = 'tag';
+  el.textContent = b.name;
+  const arr = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); // 箭头（尖端钉在天体中心）
+  arr.setAttribute('class', 'arr');
+  arr.setAttribute('viewBox', '0 0 36 12');
+  arr.innerHTML =
+    '<line x1="0" y1="6" x2="28" y2="6" stroke="#c8c8c8" stroke-width="1.5"/>' +
+    '<path d="M 27 1.5 L 36 6 L 27 10.5 Z" fill="#c8c8c8"/>';
+  tagsRoot.appendChild(el);
+  tagsRoot.appendChild(arr);
+  return { name: b.name, pos: worldPosResolved(b), el, arr };
+});
+
+// TAB 键：隐藏/显示标签
+let tagsVisible = true;
+addEventListener('keydown', e => {
+  if (e.code === 'Tab') {
+    e.preventDefault();
+    tagsVisible = !tagsVisible;
+    tagsRoot.style.display = tagsVisible ? 'block' : 'none';
+  }
+});
+
+const SHAFT = 36; // 箭头长度（天体中心 → 文字端点的固定像素距离）
+const vTmp = new THREE.Vector3();
+const fwdTmp = new THREE.Vector3();
+function updateTags() {
+  fwdTmp.set(0, 0, -1).applyQuaternion(camera.quaternion);
+  const cx = innerWidth / 2, cy = innerHeight / 2;
+  for (const t of tags) {
+    vTmp.copy(t.pos).sub(camera.position);
+    if (vTmp.dot(fwdTmp) <= 0) { t.el.style.display = t.arr.style.display = 'none'; continue; } // 在身后
+    vTmp.copy(t.pos).project(camera);
+    const sx = (vTmp.x * 0.5 + 0.5) * innerWidth;
+    const sy = (-vTmp.y * 0.5 + 0.5) * innerHeight;
+    if (sx < -80 || sx > innerWidth + 80 || sy < -60 || sy > innerHeight + 60) { t.el.style.display = t.arr.style.display = 'none'; continue; }
+    t.el.style.display = t.arr.style.display = 'block';
+    // 沿「屏幕中心 → 天体」径向向外排列：天体中心 ←箭头← 文字
+    let nx = sx - cx, ny = sy - cy;
+    const len = Math.hypot(nx, ny) || 1;
+    nx /= len; ny /= len;
+    // 箭头：尖端（transform-origin）精确钉在天体中心，箭身沿径向向外旋转
+    t.arr.style.left = sx + 'px';
+    t.arr.style.top = sy + 'px';
+    const ang = Math.atan2(-ny, -nx) / DEG; // 从文字端指向天体中心 = -径向
+    t.arr.style.transform = `rotate(${ang.toFixed(1)}deg) translate(-100%, -50%)`;
+    // 文字：位于箭头另一端（径向外侧 36px），向外延伸
+    const tx = sx + nx * SHAFT, ty = sy + ny * SHAFT;
+    t.el.style.left = tx + 'px';
+    t.el.style.top = ty + 'px';
+    t.el.style.transform = nx < 0 ? 'translate(-100%, -50%)' : 'translate(0, -50%)';
+  }
+}
+
+renderer.setAnimationLoop(t => {
+  camera.quaternion.setFromEuler(eul);
+  camera.fov += (fov - camera.fov) * 0.12;
+  camera.updateProjectionMatrix();
+
+  if (t - hudTimer > 100) { // HUD 10Hz 刷新
+    hudTimer = t;
+    FORWARD.set(0, 0, -1).applyQuaternion(camera.quaternion);
+    const viewAz = azimuthOf(FORWARD);
+    const viewEl = Math.asin(THREE.MathUtils.clamp(FORWARD.y, -1, 1)) / DEG;
+    let s = `FOV ${camera.fov.toFixed(camera.fov < 1 ? 3 : 1)}°  ${(60 / camera.fov).toFixed(0)}x\n`;
+    s += `<b>视线  方位 ${fmt(viewAz)}  俯仰 ${fmt(viewEl)}</b>\n`;
+    s += '──── 天体方位 ────\n';
+    for (const b of bodyAz) s += `${b.name.padEnd(4, '　')} ${fmt(b.az)}\n`;
+    hud.innerHTML = s;
+  }
+
+  updateTags();
+  renderer.render(scene, camera);
+});
+</script>
+</body>
+</html>
