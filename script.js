@@ -13,7 +13,7 @@ const projects = [
     { name: "太阳系真实比例模拟", url: "main/太阳系/太阳系.html" },
     { name: "伪光影渲染测试", url: "main/渲染测试/non-physical-lighting.html" },
     { name: "真实光影渲染测试", url: "main/渲染测试/physical-lighting.html" },
-    // { name: "……建设中", url: "#" },
+    { name: "琉璃地狱拼图", url: "main/琉璃地狱拼图/琉璃地狱拼图.html" },
     // { name: "……建设中", url: "#" },
     // { name: "……建设中", url: "#" },
     // { name: "……建设中", url: "#" },
