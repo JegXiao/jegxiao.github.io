@@ -1,5 +1,5 @@
 let currentLang = localStorage.getItem('of-lang') || 'zh';
-if (currentLang === 'zh-TW') currentLang = 'zh'; // 繁体已移除，旧偏好回退简体
+if (currentLang === 'zh-TW') currentLang = 'zh'; // 繁体已移除，旧偏好回退中文
 
 function t(key) {
   return (headI18n[currentLang] && headI18n[currentLang][key])

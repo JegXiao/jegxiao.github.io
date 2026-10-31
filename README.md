@@ -10,7 +10,7 @@
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=000)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![No Build](https://img.shields.io/badge/Build-None-success)](#-技术栈)
 
-**简体中文** · [ English](#english)
+**中文** · [ English](#english)
 
 </div>
 
@@ -26,7 +26,7 @@
 
 ✨ **核心特性**
 
-- 🌍 **双语切换**：简体中文 / English
+- 🌍 **双语切换**：中文 / English
 - 🎨 **三套主题**：亮色 / 暗色 / 跟随系统
 - 📄 **多页面架构**：首页、关于、项目、团队
 - ⚡ **纯静态**：无构建工具、无依赖
@@ -86,53 +86,6 @@ openflow/
 
 ---
 
-## 📁 仓库结构
-
-```
-jegxiao.github.io/
-├── index.html                  ← 主页（项目入口）
-├── style.css                   ← 主页样式
-├── script.js                   ← 主页按钮生成
-├── 图标/                       ← 个人 LOGO（16/32/128/256）
-├── main/                       ← 历史项目集
-│   ├── F1反应测试/
-│   ├── SW/                     ← SolidWorks 建模展示
-│   ├── 何意味/
-│   ├── 小工具/ICO编辑器/
-│   ├── 康威生命游戏/
-│   ├── 我要验牌/
-│   ├── 汉诺塔演示器/
-│   ├── 赛车摩擦圆模拟/
-│   └── 钢琴/
-├── openflow/                    ← ★ 主推项目
-│   ├── index.html              ← 入口（自动跳转）
-│   ├── html_and_i18n/
-│   ├── css/
-│   └── js/
-├── .gitignore
-└── LICENSE
-```
-
----
-
-## 🏃 本地预览
-
-由于路径含中文，文件系统编码敏感，建议用 HTTP 服务器而非 `file://` 直接打开：
-
-```bash
-# Python 3
-python -m http.server 8000
-
-# 或 Node.js
-npx serve .
-
-# 或在 WebStorm 中直接打开（推荐，内置 HTTP 服务器）
-```
-
-然后访问 [http://localhost:8000](http://localhost:8000)。
-
----
-
 ## 🌐 多语言 i18n 设计要点
 
 OpenFlow 项目里用了一套**简洁的翻译方案**：
@@ -140,15 +93,9 @@ OpenFlow 项目里用了一套**简洁的翻译方案**：
 | 特点 | 说明 |
 |------|------|
 | 数据文件独立 | 每个页面（`1首页.html` 等）配独立的 `*-i18n.js` |
-| 中文键名 | `data-i18n` 的值就是 HTML 原文，简体中文无需重复 |
+| 中文键名 | `data-i18n` 的值就是 HTML 原文，中文无需重复 |
 | 顶部栏共享 | `0_head-i18n.js` 集中导航/主题/语言翻译 |
-| 简体中文兜底 | HTML 原文始终作为简中显示，无需额外 zh 数据 |
-
----
-
-## 📜 License
-
-本项目以 **MIT License** 开源——详情见 [LICENSE](LICENSE) 文件。
+| 中文兜底 | HTML 原文始终作为中文显示，无需额外 zh 数据 |
 
 ---
 
@@ -164,7 +111,7 @@ A small collection of projects around fluid mechanics, collaboration, and openne
 
 ✨ **Key features**
 
-- 🌍 **Two languages**: Simplified Chinese, English
+- 🌍 **Two languages**: Chinese, English
 - 🎨 **Three themes**: Light / Dark / System
 - 📄 **Multi-page**: Home, About, Projects, Team
 - ⚡ **Pure static**: no toolchain, no dependencies
@@ -179,7 +126,3 @@ See the full table in the "项目列表" section above (entries are bilingual-fr
 
 - **HTML5** · **CSS3** · **Vanilla JavaScript** · **GitHub Pages**
 - **No build tools** — edit source, refresh browser
-
-### 📜 License
-
-Released under the **MIT License** — see [LICENSE](LICENSE).
