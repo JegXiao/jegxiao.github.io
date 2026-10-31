@@ -10,7 +10,7 @@
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=000)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![No Build](https://img.shields.io/badge/Build-None-success)](#-技术栈)
 
-**简体中文** · [繁體中文](#繁體中文) · [ English](#english)
+**简体中文** · [ English](#english)
 
 </div>
 
@@ -26,7 +26,7 @@
 
 ✨ **核心特性**
 
-- 🌍 **三语切换**：简体中文 / 繁體中文 / English
+- 🌍 **双语切换**：简体中文 / English
 - 🎨 **三套主题**：亮色 / 暗色 / 跟随系统
 - 📄 **多页面架构**：首页、关于、项目、团队
 - ⚡ **纯静态**：无构建工具、无依赖
@@ -61,7 +61,7 @@ openflow/
 
 | 项目                  | 简介 | 链接 |
 |---------------------|------|------|
-| ★ **OpenFlow 开放流动** | 三语静态站点，带主题切换 | [访问](https://jegxiao.github.io/openflow) |
+| ★ **OpenFlow 开放流动** | 双语静态站点，带主题切换 | [访问](https://jegxiao.github.io/openflow) |
 | 🎹 键盘钢琴             | 用键盘弹奏的网页钢琴 | [访问](https://jegxiao.github.io/main/钢琴/钢琴.html) |
 | 🃏 我要验牌             | 《赌神》风格的扑克牌验牌程序 | [访问](https://jegxiao.github.io/main/我要验牌/验牌.html) |
 | 🏎️ F1 起跑反应测试       | 测量你的 F1 起跑反应速度 | [访问](https://jegxiao.github.io/main/F1反应测试/f1_reaction_test.html) |
@@ -152,40 +152,6 @@ OpenFlow 项目里用了一套**简洁的翻译方案**：
 
 ---
 
-# 繁體中文
-
-## 🚀 JegXiao 的專案主頁
-
-**個人專案作品集 · GitHub Pages · Vanilla HTML / CSS / JS**
-
-### 🌟 主推專案 · OpenFlow 開放流動
-
-一套關於流體、協作與開放的小型專案集合。
-
-✨ **核心特性**
-
-- 🌍 **三語切換**：簡體中文 / 繁體中文 / English
-- 🎨 **三套主題**：亮色 / 暗色 / 跟隨系統
-- 📄 **多頁面架構**：首頁、關於、項目、團隊
-- ⚡ **純靜態**：無建置工具、無依賴
-
-🔗 **訪問地址**：[jegxiao.github.io/openflow](https://jegxiao.github.io/openflow)
-
-### 📂 專案列表
-
-完整列表見上方「項目列表」表格（簡繁不影響條目名稱）。
-
-### 🛠️ 技術棧
-
-- **HTML5** · **CSS3** · **Vanilla JavaScript** · **GitHub Pages**
-- 全程**不使用建置工具**
-
-### 📜 授權
-
-本專案以 **MIT License** 開源。
-
----
-
 # English
 
 ## 🚀 JegXiao's Project Hub
@@ -198,7 +164,7 @@ A small collection of projects around fluid mechanics, collaboration, and openne
 
 ✨ **Key features**
 
-- 🌍 **Three languages**: Simplified / Traditional Chinese, English
+- 🌍 **Two languages**: Simplified Chinese, English
 - 🎨 **Three themes**: Light / Dark / System
 - 📄 **Multi-page**: Home, About, Projects, Team
 - ⚡ **Pure static**: no toolchain, no dependencies

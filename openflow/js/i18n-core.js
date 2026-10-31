@@ -1,4 +1,5 @@
 let currentLang = localStorage.getItem('of-lang') || 'zh';
+if (currentLang === 'zh-TW') currentLang = 'zh'; // 繁体已移除，旧偏好回退简体
 
 function t(key) {
   return (headI18n[currentLang] && headI18n[currentLang][key])
@@ -18,7 +19,7 @@ function renderLang() {
   if (typeof updateThemeLabel === 'function') {
     updateThemeLabel(getStoredTheme());
   }
-  const langMap = { zh: 'zh-CN', 'zh-TW': 'zh-TW', en: 'en' };
+  const langMap = { zh: 'zh-CN', en: 'en' };
   document.documentElement.lang = langMap[currentLang] || 'zh-CN';
   localStorage.setItem('of-lang', currentLang);
 }
