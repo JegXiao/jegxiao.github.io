@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>蓝牙键盘测试台 | Keyboard Test</title>
+<style>
+  :root{
+    --bg:#0e1013; --panel:#151922; --panel2:#1a1f2a; --line:#2a3040;
+    --txt:#e8eaf0; --mut:#8a93a6; --acc:#4da3ff; --acc2:#2d6fd2;
+    --ok:#6ee7a0; --warn:#ffb454; --bad:#ff7a7a;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bg); color:var(--txt);
+    font-family:"Segoe UI","Microsoft YaHei",system-ui,sans-serif;
+    padding:18px 20px 30px; min-width:1080px;
+  }
+  .wrap{max-width:1200px; margin:0 auto;}
+  header{display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:14px;}
+  h1{font-size:22px; letter-spacing:.5px;}
+  h1 .en{color:var(--mut); font-size:13px; font-weight:400; margin-left:10px;}
+  .sub{color:var(--mut); font-size:12.5px; margin-top:4px;}
+  .btns button{
+    background:var(--panel2); color:var(--txt); border:1px solid var(--line);
+    border-radius:7px; padding:7px 14px; font-size:13px; cursor:pointer; margin-left:8px;
+  }
+  .btns button:hover{border-color:var(--acc);}
+  /* ---- 状态卡 ---- */
+  .cards{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:10px; margin-bottom:12px;}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:10px 14px;}
+  .card .t{font-size:11.5px; color:var(--mut); margin-bottom:6px;}
+  #combo{font-size:19px; font-weight:600; color:var(--acc); min-height:26px; word-break:break-all;}
+  .num{font-size:22px; font-weight:700;}
+  .num small{font-size:12px; color:var(--mut); font-weight:400; margin-left:3px;}
+  /* 按住键的 chips */
+  #held{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; min-height:30px;}
+  #held .chip{
+    background:var(--panel2); border:1px solid var(--acc2); color:var(--txt);
+    border-radius:999px; padding:4px 12px; font-size:12.5px;
+  }
+  #held .chip.warn{border-color:var(--warn); color:var(--warn);}
+  #held .none{color:var(--mut); font-size:12.5px; padding:5px 2px;}
+  /* ---- 最后事件表 ---- */
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  th{color:var(--mut); font-weight:400; text-align:left; padding:3px 10px 3px 0; width:90px;}
+  td{padding:3px 0; font-family:Consolas,monospace; color:var(--txt);}
+  /* ---- 键盘图 ---- */
+  .kb-box{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px; margin-bottom:12px;}
+  .kb{display:flex; flex-direction:column; gap:6px; user-select:none;}
+  .kb-row{display:flex; gap:6px;}
+  .sp{flex:0 1 0; min-width:0;}
+  .key{
+    flex:1 1 0; min-width:0; height:44px; background:#20263400; background:var(--panel2);
+    border:1px solid var(--line); border-radius:6px; box-shadow:0 2px 0 rgba(0,0,0,.45);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    line-height:1.15; transition:background .05s, transform .05s; overflow:hidden;
+  }
+  .key .lg{font-size:12.5px; white-space:nowrap;}
+  .key .cd{font-size:8px; color:var(--mut); max-width:96%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .key.down{
+    background:var(--acc); border-color:var(--acc); color:#fff; transform:translateY(2px);
+    box-shadow:none; box-shadow:0 0 10px rgba(77,163,255,.55);
+  }
+  .key.down .cd{color:rgba(255,255,255,.75);}
+  .key.dead{opacity:.35; border-style:dashed; cursor:default;}
+  .kb-cols{display:flex; gap:14px; margin-top:6px;}
+  .kb-main{flex:15 1 0; display:flex; flex-direction:column; gap:6px;}
+  .kb-nav{flex:3 1 0; display:flex; flex-direction:column; gap:6px;}
+  .kb-nav .gap-row{margin-top:22px;}
+  .kb-np{
+    flex:4 1 0; display:grid; gap:6px;
+    grid-template-columns:repeat(4,1fr); grid-auto-rows:44px;
+  }
+  .kb-np .key{height:auto;}
+  .legend{color:var(--mut); font-size:12px; margin-top:10px; line-height:1.7;}
+  .legend b{color:var(--txt); font-weight:600;}
+  /* ---- 日志 ---- */
+  .log-box{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px 14px;}
+  .log-box .hd{display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;}
+  .log-box .hd .t{font-size:13px; color:var(--mut);}
+  #log{
+    height:190px; overflow-y:auto; font-family:Consolas,monospace; font-size:12.5px;
+    background:var(--bg); border:1px solid var(--line); border-radius:7px; padding:8px 10px;
+  }
+  #log .ln{padding:1.5px 0; color:var(--txt); white-space:nowrap;}
+  #log .tm{color:var(--mut);}
+  #log .dn{color:var(--ok); font-weight:700;}
+  #log .up{color:var(--mut); font-weight:700;}
+  #log .rep{color:var(--warn);}
+  #log .unk{color:var(--warn);}
+  #log .sys{color:var(--acc); font-style:italic;}
+  /* ---- 打字区 & 提示 ---- */
+  .row2{display:flex; gap:10px; margin-bottom:12px; align-items:stretch;}
+  #typetext{
+    flex:1; background:var(--panel); border:1px solid var(--line); border-radius:8px;
+    color:var(--txt); font-size:14px; padding:10px 12px; outline:none;
+  }
+  #typetext:focus{border-color:var(--acc2);}
+  details{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:10px 14px; font-size:13px; color:var(--mut); line-height:1.9; flex:1;}
+  details summary{cursor:pointer; color:var(--txt); font-size:13.5px;}
+  details b{color:var(--warn); font-weight:600;}
+  .cap{display:flex; align-items:center; gap:6px; font-size:13px; color:var(--mut); cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <h1>⌨️ 蓝牙键盘测试台<span class="en">Bluetooth Keyboard Test</span></h1>
+      <div class="sub">按键映射（event.code 物理位置）· 快捷键组合 · 按键无冲（NKRO）· 卡键/失联检测</div>
+    </div>
+    <div class="btns">
+      <label class="cap"><input type="checkbox" id="pdcap" checked> 拦截浏览器默认快捷键</label>
+      <button id="btnClear">清空日志</button>
+      <button id="btnReset">全部重置</button>
+    </div>
+  </header>
+
+  <div class="cards">
+    <div class="card"><div class="t">当前组合（按住中的键）</div><div id="combo">（未按任何键）</div></div>
+    <div class="card"><div class="t">同时按下 / 最大无冲</div><div class="num"><span id="curN">0</span><small>键</small>/<span id="maxN">0</span><small>键</small></div></div>
+    <div class="card"><div class="t">总按键 / 自动重复</div><div class="num"><span id="totN">0</span><small>次</small>/<span id="repN">0</span><small>次</small></div></div>
+    <div class="card">
+      <div class="t">最后一个按键事件</div>
+      <table>
+        <tr><th>key 字符</th><td id="evKey">—</td><th>code 物理码</th><td id="evCode">—</td></tr>
+        <tr><th>keyCode</th><td id="evKc">—</td><th>位置 / 重复</th><td id="evLoc">—</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div id="held"><span class="none">按住的键会显示在这里，超过 8 秒变橙（疑似卡键 / 蓝牙丢 keyup）</span></div>
+
+  <div class="kb-box">
+    <div class="kb" id="kb"></div>
+    <div class="legend">
+      键位按 <b>event.code（物理位置）</b>点亮——按 <b>A</b> 却点亮别的键 = 按键映射错误；
+      右侧小字是物理码。多媒体键若只出现在日志而键盘图不亮，说明发送了非标准码或浏览器不识别。
+    </div>
+  </div>
+
+  <div class="row2">
+    <input id="typetext" type="text" placeholder="打字测试：在此输入看实际收到的字符（建议先切英文输入法，中文输入法会拦截按键）" autocomplete="off">
+    <details>
+      <summary>蓝牙键盘测试指引（点开）</summary>
+      <b>浏览器抓不到系统级组合</b>：Win、Alt+Tab、Ctrl+Alt+Del 由系统接管，需在系统里验证；
+      <b>NKRO</b>：同时按多键看「最大无冲」，蓝牙普遍只有 2~6 键无冲，WASD+修饰键组合最容易穿帮；
+      <b>Fn 键</b>通常不向系统发事件（键盘图中灰色虚位）；<b>多媒体键</b>可能报为 MediaPlayPause 等或完全不上报；
+      <b>丢 keyup 卡键</b>是蓝牙通病：连接抽风后某键一直"按住"，本页超过 8 秒标橙，窗口失焦时自动清空。
+    </details>
+  </div>
+
+  <div class="log-box">
+    <div class="hd"><span class="t">事件日志（keydown / keyup 实时流水，repeat 已合并计数）</span></div>
+    <div id="log"></div>
+  </div>
+
+</div>
+
+<script>
+/* ================= 键位定义（TKL 布局，event.code 驱动） ================= */
+const K = (code,label,w=1)=>({code,label,w});
+const DEAD = (label,w=1)=>({code:null,label,w,dead:true});
+const SP = w=>({sp:w});
+
+const funcRow = [
+  K('Escape','Esc'), SP(1),
+  K('F1','F1'),K('F2','F2'),K('F3','F3'),K('F4','F4'), SP(.5),
+  K('F5','F5'),K('F6','F6'),K('F7','F7'),K('F8','F8'), SP(.5),
+  K('F9','F9'),K('F10','F10'),K('F11','F11'),K('F12','F12'), SP(.5),
+  K('PrintScreen','PrtSc'),K('ScrollLock','ScrLk'),K('Pause','Pause'),
+];
+const mainRows = [
+  [K('Backquote','`'),K('Digit1','1'),K('Digit2','2'),K('Digit3','3'),K('Digit4','4'),K('Digit5','5'),K('Digit6','6'),K('Digit7','7'),K('Digit8','8'),K('Digit9','9'),K('Digit0','0'),K('Minus','-'),K('Equal','='),K('Backspace','Backspace',2)],
+  [K('Tab','Tab',1.5),K('KeyQ','Q'),K('KeyW','W'),K('KeyE','E'),K('KeyR','R'),K('KeyT','T'),K('KeyY','Y'),K('KeyU','U'),K('KeyI','I'),K('KeyO','O'),K('KeyP','P'),K('BracketLeft','['),K('BracketRight',']'),K('Backslash','\\',1.5)],
+  [K('CapsLock','Caps',1.75),K('KeyA','A'),K('KeyS','S'),K('KeyD','D'),K('KeyF','F'),K('KeyG','G'),K('KeyH','H'),K('KeyJ','J'),K('KeyK','K'),K('KeyL','L'),K('Semicolon',';'),K('Quote',"'"),K('Enter','Enter',2.25)],
+  [K('ShiftLeft','Shift',2.25),K('KeyZ','Z'),K('KeyX','X'),K('KeyC','C'),K('KeyV','V'),K('KeyB','B'),K('KeyN','N'),K('KeyM','M'),K('Comma',','),K('Period','.'),K('Slash','/'),K('ShiftRight','Shift',2.75)],
+  [K('ControlLeft','Ctrl',1.25),K('MetaLeft','Win',1.25),K('AltLeft','Alt',1.25),K('Space','Space',6.25),K('AltRight','Alt',1.25),DEAD('Fn',1.25),K('ContextMenu','Menu',1.25),K('ControlRight','Ctrl',1.25)],
+];
+const navRows = [
+  [K('Insert','Ins'),K('Home','Home'),K('PageUp','PgUp')],
+  [K('Delete','Del'),K('End','End'),K('PageDown','PgDn')],
+  {gap:true, keys:[SP(1),K('ArrowUp','↑'),SP(1)]},
+  [K('ArrowLeft','←'),K('ArrowDown','↓'),K('ArrowRight','→')],
+];
+const npKeys = [
+  {code:'NumLock',label:'NumLk',c:1,r:1},{code:'NumpadDivide',label:'/',c:2,r:1},
+  {code:'NumpadMultiply',label:'*',c:3,r:1},{code:'NumpadSubtract',label:'-',c:4,r:1,rs:2},
+  {code:'Numpad7',label:'7',c:1,r:2},{code:'Numpad8',label:'8',c:2,r:2},{code:'Numpad9',label:'9',c:3,r:2},
+  {code:'Numpad4',label:'4',c:1,r:3},{code:'Numpad5',label:'5',c:2,r:3},{code:'Numpad6',label:'6',c:3,r:3},
+  {code:'Numpad1',label:'1',c:1,r:4},{code:'Numpad2',label:'2',c:2,r:4},{code:'Numpad3',label:'3',c:3,r:4},
+  {code:'NumpadEnter',label:'Enter',c:4,r:3,rs:2},
+  {code:'Numpad0',label:'0',c:1,r:5,cs:2},{code:'NumpadDecimal',label:'.',c:3,r:5},
+];
+
+const NAME = {}; // code -> 显示名
+const keyEls = {}; // code -> DOM
+const kb = document.getElementById('kb');
+
+function makeKey(def){
+  const el = document.createElement('div');
+  el.className = 'key' + (def.dead ? ' dead' : '');
+  el.style.flex = (def.w||1) + ' 1 0';
+  el.title = def.code || 'Fn（通常不向系统发送事件）';
+  el.innerHTML = '<span class="lg">'+def.label+'</span>' + (def.code ? '<span class="cd">'+def.code+'</span>' : '');
+  if (def.code){ keyEls[def.code] = el; NAME[def.code] = def.label; }
+  return el;
+}
+function makeSpacer(w){ const el=document.createElement('div'); el.className='sp'; el.style.flex=w+' 1 0'; return el; }
+
+function buildKeyboard(){
+  const fr = document.createElement('div'); fr.className='kb-row';
+  funcRow.forEach(d => fr.appendChild(d.sp ? makeSpacer(d.sp) : makeKey(d)));
+  kb.appendChild(fr);
+
+  const cols = document.createElement('div'); cols.className='kb-cols';
+  const main = document.createElement('div'); main.className='kb-main';
+  mainRows.forEach(row=>{
+    const r=document.createElement('div'); r.className='kb-row';
+    row.forEach(d=>r.appendChild(makeKey(d))); main.appendChild(r);
+  });
+  const nav = document.createElement('div'); nav.className='kb-nav';
+  navRows.forEach(row=>{
+    const r=document.createElement('div'); r.className='kb-row' + (row.gap?' gap-row':'');
+    const keys = Array.isArray(row) ? row : row.keys; // 注意：数组的 .keys 是内置方法，不能当数据字段用
+    keys.forEach(d=>r.appendChild(d.sp?makeSpacer(d.sp):makeKey(d))); nav.appendChild(r);
+  });
+  const np = document.createElement('div'); np.className='kb-np';
+  npKeys.forEach(d=>{
+    const el = makeKey({code:d.code,label:d.label,w:1});
+    el.style.gridColumn = d.c + (d.cs ? ' / span '+d.cs : '');
+    el.style.gridRow = d.r + (d.rs ? ' / span '+d.rs : '');
+    np.appendChild(el);
+  });
+  cols.append(main, nav, np);
+  kb.appendChild(cols);
+}
+buildKeyboard();
+
+/* ================= 状态与渲染 ================= */
+const held = new Map();       // code -> {label, key, since, repeats}
+let maxHeld=0, totalDown=0, totalRepeat=0;
+const lastLine = new Map();   // code -> 日志行元素（repeat 合并用）
+
+const $ = id=>document.getElementById(id);
+const cap=$('pdcap'), typeBox=$('typetext'), heldBox=$('held'), logBox=$('log');
+const MODS=['ControlLeft','ControlRight','ShiftLeft','ShiftRight','AltLeft','AltRight','MetaLeft','MetaRight'];
+const LOC=['标准','左','右','小键盘'];
+
+function ts(){ const d=new Date(); return d.toTimeString().slice(0,8)+'.'+String(d.getMilliseconds()).padStart(3,'0'); }
+function appendLog(html, cls){
+  const ln=document.createElement('div'); ln.className='ln '+(cls||''); ln.innerHTML=html;
+  logBox.appendChild(ln);
+  while (logBox.children.length>300) logBox.firstChild.remove();
+  logBox.scrollTop=logBox.scrollHeight;
+  return ln;
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/ /g,'␣'); }
+
+function renderHeld(){
+  heldBox.innerHTML='';
+  if (!held.size){ heldBox.innerHTML='<span class="none">按住的键会显示在这里，超过 8 秒变橙（疑似卡键 / 蓝牙丢 keyup）</span>'; return; }
+  const entries=[...held.entries()].sort((a,b)=>{
+    const ai=MODS.indexOf(a[0]), bi=MODS.indexOf(b[0]);
+    return (ai<0?99:ai)-(bi<0?99:bi);
+  });
+  entries.forEach(([code,info])=>{
+    const c=document.createElement('span'); c.className='chip'; c.dataset.code=code;
+    heldBox.appendChild(c);
+  });
+  tickHeld();
+}
+function tickHeld(){
+  const now=Date.now();
+  heldBox.querySelectorAll('.chip').forEach(c=>{
+    const info=held.get(c.dataset.code); if(!info) return;
+    const sec=((now-info.since)/1000)|0;
+    c.textContent=info.label+' · '+sec+'s';
+    c.classList.toggle('warn', sec>=8);
+  });
+}
+function renderCombo(){
+  if (!held.size){ $('combo').textContent='（未按任何键）'; }
+  else{
+    const entries=[...held.entries()].sort((a,b)=>{
+      const ai=MODS.indexOf(a[0]), bi=MODS.indexOf(b[0]);
+      return (ai<0?99:ai)-(bi<0?99:bi);
+    });
+    $('combo').textContent=entries.map(([,i])=>i.label).join(' + ');
+  }
+}
+function renderStats(){
+  $('curN').textContent=held.size;
+  $('maxN').textContent=maxHeld;
+  $('totN').textContent=totalDown;
+  $('repN').textContent=totalRepeat;
+}
+function renderEvent(e, code){
+  $('evKey').textContent=esc(e.key);
+  $('evCode').textContent=e.code||'(无)';
+  $('evKc').textContent=e.keyCode??'—';
+  $('evLoc').textContent=(LOC[e.location]||e.location)+' / '+(e.repeat?'是':'否');
+}
+function clearHeld(reason){
+  if (!held.size) return;
+  appendLog('<span class="sys">⚠ '+reason+'，清空 '+held.size+' 个按住状态（蓝牙丢 keyup 的常见表现）</span>');
+  held.forEach((_,c)=>keyEls[c]&&keyEls[c].classList.remove('down'));
+  held.clear(); lastLine.clear();
+  renderHeld(); renderCombo(); renderStats();
+}
+
+/* ================= 事件监听 ================= */
+window.addEventListener('keydown', e=>{
+  const code = e.code || 'Unidentified';
+  const label = NAME[code] || e.key || code;
+  if (cap.checked && e.target!==typeBox) e.preventDefault();
+  renderEvent(e, code);
+
+  if (e.repeat){
+    totalRepeat++;
+    const info=held.get(code);
+    if (info){
+      info.repeats++;
+      const ln=lastLine.get(code);
+      if (ln){ const r=ln.querySelector('.rep'); if(r) r.textContent='repeat×'+(info.repeats+1); }
+    }
+    renderStats(); return;
+  }
+
+  totalDown++;
+  if (!held.has(code)) held.set(code, {label, key:e.key, since:Date.now(), repeats:0});
+  maxHeld=Math.max(maxHeld, held.size);
+
+  const cls = keyEls[code] ? '' : 'unk';
+  const tag = keyEls[code] ? '' : ' <span class="unk">[非标准码，键盘图未收录]</span>';
+  const ln=appendLog('<span class="tm">'+ts()+'</span> <span class="dn">↓</span> <b>'+esc(code)+'</b> key='+esc(e.key)+
+    ' kc='+e.keyCode+' loc='+e.location+' <span class="rep"></span>'+tag, cls);
+  lastLine.set(code, ln);
+
+  if (keyEls[code]) keyEls[code].classList.add('down');
+  renderHeld(); renderCombo(); renderStats();
+}, false);
+
+window.addEventListener('keyup', e=>{
+  const code = e.code || 'Unidentified';
+  const label = NAME[code] || e.key || code;
+  if (cap.checked && e.target!==typeBox) e.preventDefault();
+  renderEvent(e, code);
+  appendLog('<span class="tm">'+ts()+'</span> <span class="up">↑</span> <b>'+esc(code)+'</b> key='+esc(e.key), '');
+  held.delete(code); lastLine.delete(code);
+  if (keyEls[code]) keyEls[code].classList.remove('down');
+  renderHeld(); renderCombo(); renderStats();
+}, false);
+
+window.addEventListener('blur', ()=>clearHeld('窗口失焦'));
+document.addEventListener('visibilitychange', ()=>{ if(document.hidden) clearHeld('页面隐藏'); });
+
+/* 卡键监测：0.5s 刷新按住时长，≥8s 标橙 */
+setInterval(tickHeld, 500);
+
+/* 按钮（点击后主动失焦，避免空格/回车误触发按钮） */
+$('btnClear').addEventListener('click', function(){ logBox.innerHTML=''; this.blur(); });
+$('btnReset').addEventListener('click', function(){
+  logBox.innerHTML=''; held.clear(); lastLine.clear(); maxHeld=0; totalDown=0; totalRepeat=0;
+  Object.values(keyEls).forEach(el=>el.classList.remove('down'));
+  renderHeld(); renderCombo(); renderStats(); this.blur();
+});
+typeBox.addEventListener('keydown', e=>{ if(e.key==='Escape') typeBox.value=''; });
+</script>
+</body>
+</html>
